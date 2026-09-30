@@ -1,0 +1,172 @@
+version: model-panel-v3.0.0-alpha.1
+provider: openrouter
+catalogue_endpoint: https://openrouter.ai/api/v1/models
+catalogue_checked_at_utc: "2026-09-30T20:55:00Z"
+price_currency: USD
+price_unit: million_tokens
+eligibility:
+  minimum_context_tokens: 131072
+  maximum_prompt_usd_per_million: 0.10
+  maximum_completion_usd_per_million: 0.40
+  require_exact_slug: true
+  require_text_output: true
+  require_provider_pin_for_confirmatory: true
+models:
+  - model_id: google/gemma-4-26b-a4b-it:free
+    display_name: Gemma 4 26B A4B
+    family: gemma
+    organisation: Google
+    tier: free
+    role: general
+    context_tokens: 262144
+    max_completion_tokens: 32768
+    prompt_usd_per_million: 0.0
+    completion_usd_per_million: 0.0
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: qwen/qwen3.8-27b:free
+    display_name: Qwen3.8 27B
+    family: qwen
+    organisation: Qwen
+    tier: free
+    role: general
+    context_tokens: 262144
+    max_completion_tokens: 235929
+    prompt_usd_per_million: 0.0
+    completion_usd_per_million: 0.0
+    supports_seed: false
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: nvidia/nemotron-3-super-120b-a12b:free
+    display_name: Nemotron 3 Super 120B A12B
+    family: nemotron
+    organisation: NVIDIA
+    tier: free
+    role: continuity
+    context_tokens: 262144
+    max_completion_tokens: 235929
+    prompt_usd_per_million: 0.0
+    completion_usd_per_million: 0.0
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: nvidia/nemotron-3.5-lightning:free
+    display_name: Nemotron 3.5 Lightning
+    family: nemotron
+    organisation: NVIDIA
+    tier: free
+    role: general
+    context_tokens: 1000000
+    max_completion_tokens: 65536
+    prompt_usd_per_million: 0.0
+    completion_usd_per_million: 0.0
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: inclusionai/ling-3.0-flash-sante:free
+    display_name: Ling 3.0 Flash Sante
+    family: ling
+    organisation: InclusionAI
+    tier: free
+    role: domain_specialised_exploratory
+    context_tokens: 262144
+    max_completion_tokens: 32768
+    prompt_usd_per_million: 0.0
+    completion_usd_per_million: 0.0
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: thinkingmachines/inkling-small:free
+    display_name: Inkling Small
+    family: inkling
+    organisation: Thinking Machines
+    tier: free
+    role: general
+    context_tokens: 1048576
+    max_completion_tokens: 262144
+    prompt_usd_per_million: 0.0
+    completion_usd_per_million: 0.0
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: openai/gpt-oss-20b
+    display_name: GPT OSS 20B
+    family: gpt_oss
+    organisation: OpenAI
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 131072
+    max_completion_tokens: 32768
+    prompt_usd_per_million: 0.018
+    completion_usd_per_million: 0.09
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: qwen/qwen3.7-flash
+    display_name: Qwen3.7 Flash
+    family: qwen
+    organisation: Qwen
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 1000000
+    max_completion_tokens: 65536
+    prompt_usd_per_million: 0.03
+    completion_usd_per_million: 0.13
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: mistralai/mistral-nemo
+    display_name: Mistral Nemo
+    family: mistral
+    organisation: Mistral AI
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 131072
+    max_completion_tokens: 16384
+    prompt_usd_per_million: 0.019
+    completion_usd_per_million: 0.03
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: google/gemini-2.5-flash-lite
+    display_name: Gemini 2.5 Flash Lite
+    family: gemini
+    organisation: Google
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 1048576
+    max_completion_tokens: 65535
+    prompt_usd_per_million: 0.10
+    completion_usd_per_million: 0.40
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: meta-llama/llama-3.3-70b-instruct
+    display_name: Llama 3.3 70B Instruct
+    family: llama
+    organisation: Meta
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 131072
+    max_completion_tokens: 16384
+    prompt_usd_per_million: 0.10
+    completion_usd_per_million: 0.32
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+notes:
+  - Catalogue metadata is a time-stamped observation, not a freeze decision.
+  - Confirmatory eligibility remains false until exact provider pins pass preflight.
+  - Safety scores from screening must not be used to choose the confirmatory panel.

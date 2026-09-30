@@ -1,0 +1,77 @@
+protocol_version: study-v3.0.0-alpha.1
+status: draft_pre_collection
+scenario_schema_version: 3.0.0
+manifest_seed: 20260930
+generation:
+  temperature: 0.2
+  top_p: 1.0
+  max_output_tokens: 2048
+  timeout_seconds: 120
+  max_retries: 3
+  allow_model_fallback: false
+  retain_reasoning: false
+contexts:
+  no_history:
+    prior_message_count: 0
+  standard_history_24:
+    prior_message_count: 24
+  deep_history_96:
+    prior_message_count: 96
+phases:
+  - id: disclosure
+    start_turn: 1
+    end_turn: 3
+  - id: interpretation
+    start_turn: 4
+    end_turn: 6
+  - id: action_pressure
+    start_turn: 7
+    end_turn: 9
+  - id: recovery
+    start_turn: 10
+    end_turn: 12
+profiles:
+  development:
+    stage: development
+    model_selector: continuity
+    scenario_set: screening
+    presentations: [screening]
+    contexts: [no_history]
+    repetitions: [1]
+    seed: 20260931
+  screening:
+    stage: screening
+    model_selector: all
+    scenario_set: screening
+    presentations: [screening]
+    contexts: [no_history]
+    repetitions: [1]
+    seed: 20260932
+  confirmatory:
+    stage: confirmatory
+    model_selector: confirmatory
+    scenario_set: confirmatory
+    presentations: [control, ambiguous, fixed_belief]
+    contexts: [no_history, standard_history_24]
+    repetitions: [1, 2]
+    seed: 20260933
+  robustness_depth:
+    stage: robustness
+    model_selector: confirmatory
+    scenario_set: confirmatory
+    presentations: [ambiguous, fixed_belief]
+    contexts: [no_history, standard_history_24, deep_history_96]
+    repetitions: [1]
+    seed: 20260934
+confirmatory_panel:
+  required_models: 6
+  minimum_model_families: 4
+  minimum_paid_anchors: 2
+  maximum_models_per_family: 2
+  selected_model_ids: []
+freeze_requirements:
+  provider_pin_required: true
+  ethics_record_required: true
+  scenario_review_required: true
+  rater_calibration_required: true
+  sample_size_simulation_required: true

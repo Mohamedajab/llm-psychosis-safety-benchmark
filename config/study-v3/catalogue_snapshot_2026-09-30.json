@@ -1,0 +1,117 @@
+{
+  "source": "https://openrouter.ai/api/v1/models",
+  "checked_at_utc": "2026-09-30T20:55:00Z",
+  "catalogue_model_count": 464,
+  "selected_models": [
+    {
+      "id": "google/gemma-4-26b-a4b-it:free",
+      "name": "Google: Gemma 4 26B A4B (free)",
+      "context_length": 262144,
+      "modality": "text+image+video->text",
+      "max_completion_tokens": 32768,
+      "prompt_usd_per_million": 0.0,
+      "completion_usd_per_million": 0.0,
+      "supported_parameters": ["include_reasoning", "max_tokens", "reasoning", "response_format", "seed", "temperature", "tool_choice", "tools", "top_p"]
+    },
+    {
+      "id": "qwen/qwen3.8-27b:free",
+      "name": "Qwen: Qwen3.8 27B (free)",
+      "context_length": 262144,
+      "modality": "text+image+video->text",
+      "max_completion_tokens": 235929,
+      "prompt_usd_per_million": 0.0,
+      "completion_usd_per_million": 0.0,
+      "supported_parameters": ["frequency_penalty", "include_reasoning", "max_tokens", "presence_penalty", "reasoning", "reasoning_effort", "repetition_penalty", "stop", "structured_outputs", "temperature", "tool_choice", "tools", "top_p"]
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b:free",
+      "name": "NVIDIA: Nemotron 3 Super (free)",
+      "context_length": 262144,
+      "modality": "text->text",
+      "max_completion_tokens": 235929,
+      "prompt_usd_per_million": 0.0,
+      "completion_usd_per_million": 0.0,
+      "supported_parameters": ["include_reasoning", "max_tokens", "reasoning", "reasoning_effort", "response_format", "seed", "structured_outputs", "temperature", "tool_choice", "tools", "top_p"]
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning:free",
+      "name": "NVIDIA: Nemotron 3.5 Lightning (free)",
+      "context_length": 1000000,
+      "modality": "text->text",
+      "max_completion_tokens": 65536,
+      "prompt_usd_per_million": 0.0,
+      "completion_usd_per_million": 0.0,
+      "supported_parameters": ["include_reasoning", "max_tokens", "reasoning", "seed", "temperature", "tool_choice", "tools", "top_p"]
+    },
+    {
+      "id": "inclusionai/ling-3.0-flash-sante:free",
+      "name": "inclusionAI: Ling 3.0 Flash Sante (free)",
+      "context_length": 262144,
+      "modality": "text->text",
+      "max_completion_tokens": 32768,
+      "prompt_usd_per_million": 0.0,
+      "completion_usd_per_million": 0.0,
+      "supported_parameters": ["frequency_penalty", "include_reasoning", "logprobs", "max_tokens", "presence_penalty", "reasoning", "repetition_penalty", "seed", "stop", "temperature", "tool_choice", "tools", "top_k", "top_logprobs", "top_p"]
+    },
+    {
+      "id": "thinkingmachines/inkling-small:free",
+      "name": "Thinking Machines: Inkling Small (free)",
+      "context_length": 1048576,
+      "modality": "text+image+audio->text",
+      "max_completion_tokens": 262144,
+      "prompt_usd_per_million": 0.0,
+      "completion_usd_per_million": 0.0,
+      "supported_parameters": ["frequency_penalty", "include_reasoning", "max_tokens", "presence_penalty", "reasoning", "reasoning_effort", "seed", "stop", "temperature", "tools", "top_p"]
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "name": "OpenAI: gpt-oss-20b",
+      "context_length": 131072,
+      "modality": "text->text",
+      "max_completion_tokens": 32768,
+      "prompt_usd_per_million": 0.018,
+      "completion_usd_per_million": 0.09,
+      "supported_parameters": ["frequency_penalty", "include_reasoning", "logit_bias", "logprobs", "max_tokens", "min_p", "presence_penalty", "reasoning", "reasoning_effort", "repetition_penalty", "response_format", "seed", "stop", "structured_outputs", "temperature", "tool_choice", "tools", "top_k", "top_logprobs", "top_p"]
+    },
+    {
+      "id": "qwen/qwen3.7-flash",
+      "name": "Qwen: Qwen3.7 Flash",
+      "context_length": 1000000,
+      "modality": "text+image+video->text",
+      "max_completion_tokens": 65536,
+      "prompt_usd_per_million": 0.03,
+      "completion_usd_per_million": 0.13,
+      "supported_parameters": ["include_reasoning", "logprobs", "max_tokens", "presence_penalty", "reasoning", "response_format", "seed", "temperature", "tool_choice", "tools", "top_logprobs", "top_p"]
+    },
+    {
+      "id": "mistralai/mistral-nemo",
+      "name": "Mistral: Mistral Nemo",
+      "context_length": 131072,
+      "modality": "text->text",
+      "max_completion_tokens": 16384,
+      "prompt_usd_per_million": 0.019,
+      "completion_usd_per_million": 0.03,
+      "supported_parameters": ["frequency_penalty", "logit_bias", "logprobs", "max_tokens", "min_p", "presence_penalty", "repetition_penalty", "response_format", "seed", "stop", "structured_outputs", "temperature", "tool_choice", "tools", "top_k", "top_logprobs", "top_p"]
+    },
+    {
+      "id": "google/gemini-2.5-flash-lite",
+      "name": "Google: Gemini 2.5 Flash Lite",
+      "context_length": 1048576,
+      "modality": "text+image+file+audio+video->text",
+      "max_completion_tokens": 65535,
+      "prompt_usd_per_million": 0.1,
+      "completion_usd_per_million": 0.4,
+      "supported_parameters": ["include_reasoning", "max_tokens", "reasoning", "response_format", "seed", "stop", "structured_outputs", "temperature", "tool_choice", "tools", "top_p"]
+    },
+    {
+      "id": "meta-llama/llama-3.3-70b-instruct",
+      "name": "Meta: Llama 3.3 70B Instruct",
+      "context_length": 131072,
+      "modality": "text->text",
+      "max_completion_tokens": 16384,
+      "prompt_usd_per_million": 0.1,
+      "completion_usd_per_million": 0.32,
+      "supported_parameters": ["frequency_penalty", "logit_bias", "logprobs", "max_tokens", "min_p", "presence_penalty", "repetition_penalty", "response_format", "seed", "stop", "structured_outputs", "temperature", "tool_choice", "tools", "top_k", "top_logprobs", "top_p"]
+    }
+  ]
+}

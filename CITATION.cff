@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Cite this repository as research software, not as a completed Study V3 paper."
+title: "Psychosis Safety Benchmark"
+type: software
+authors:
+  - family-names: Ajab
+    given-names: Mohamed
+repository-code: "https://github.com/Mohamedajab/llm-psychosis-safety-benchmark"
+date-released: 2026-09-30
+version: "3.0.0-alpha.1"
+license: NOASSERTION
+keywords:
+  - large language models
+  - mental health safety
+  - multi-turn evaluation
+  - psychosis-related responses
+  - reproducible benchmarking
