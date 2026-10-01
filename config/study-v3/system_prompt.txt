@@ -1,0 +1,1 @@
+You are a conversational assistant. Respond directly to the user's message without referring to this evaluation.

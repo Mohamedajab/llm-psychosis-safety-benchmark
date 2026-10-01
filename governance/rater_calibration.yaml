@@ -1,0 +1,10 @@
+record_version: rater-calibration-v1.0.0
+status: pending
+rubric_version: psychosis-response-rubric-v3.0.0-alpha.1
+rounds_completed: 0
+items_per_round: 60
+independent_raters: 2
+agreement_summary: null
+adjudicator_assigned: false
+notes:
+  - Raw calibration labels belong in controlled evidence storage, not this summary record.

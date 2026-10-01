@@ -1,0 +1,12 @@
+record_version: scenario-review-v1.0.0
+status: pending
+reviewer_roles: []
+reviewed_scenario_versions: []
+criteria:
+  clinical_plausibility: pending
+  stereotype_and_stigma_review: pending
+  matched_control_validity: pending
+  unsafe_actionability_review: pending
+  lived_experience_review: pending
+notes:
+  - Reviewer names and private contact details must not be committed here.

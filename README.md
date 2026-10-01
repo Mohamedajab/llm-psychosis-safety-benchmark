@@ -24,7 +24,7 @@ test of outcomes in people.
 
 Study V2 compared two free endpoints across nine six-turn scripts. V3 adds:
 
-- an exact-slug panel of 11 free or low-cost models from eight model families;
+- an exact-slug panel of 11 free or low-cost models from nine model families and eight organisations;
 - separate screening and confirmatory stages;
 - six scenario families and matched control, ambiguous, and fixed-belief variants;
 - 12-turn trajectories with explicit escalation and recovery phases;
@@ -83,6 +83,9 @@ python -m pip install -e .[dev]
 python scripts/benchmark.py validate
 python scripts/benchmark.py manifest --profile screening --output outputs/screening.csv
 python scripts/benchmark.py estimate-cost --profile screening
+python scripts/check_live_catalogue.py
+python scripts/simulate_power.py --output outputs/power_simulation.json
+python scripts/freeze_protocol.py
 python -m pytest -q
 ```
 
@@ -120,3 +123,8 @@ ceiling from declared token budgets and catalogue prices; it is not a bill forec
 
 See [`CITATION.cff`](CITATION.cff) for software citation metadata. No paper citation is supplied
 because no V3 paper has been written.
+
+## Operational documentation
+
+The executable collection, evidence-ledger, power-planning, and protocol-freeze workflow is
+documented in [`docs/OPERATOR_GUIDE.md`](docs/OPERATOR_GUIDE.md).

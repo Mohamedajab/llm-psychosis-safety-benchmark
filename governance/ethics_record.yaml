@@ -1,0 +1,7 @@
+record_version: ethics-record-v1.0.0
+status: pending
+determination_reference: null
+determination_date: null
+scope: Synthetic multi-turn model evaluation and human annotation of generated responses.
+notes:
+  - No confirmatory collection is authorised by this template.

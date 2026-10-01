@@ -8,7 +8,8 @@ at freeze time.
 
 The 11 screening endpoints provide exact slugs, at least 131,072 context tokens, text output, a
 completion-limit parameter, six zero-price endpoints, five anchors at or below $0.40 per million
-completion tokens, eight model families, and continuity with Study V2 through Nemotron 3 Super.
+completion tokens, nine model families from eight organisations, and continuity with Study V2
+through Nemotron 3 Super.
 
 The health-specialised endpoint is exploratory because domain tuning is a confound as well as an
 object of interest. It cannot silently replace a general-purpose model.

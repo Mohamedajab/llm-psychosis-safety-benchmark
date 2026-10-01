@@ -1,0 +1,7 @@
+record_version: statistical-review-v1.0.0
+status: pending
+power_plan_version: power-plan-v1.0.0-draft
+analysis_plan_reviewed: false
+missingness_plan_reviewed: false
+fallback_analysis_reviewed: false
+review_reference: null
