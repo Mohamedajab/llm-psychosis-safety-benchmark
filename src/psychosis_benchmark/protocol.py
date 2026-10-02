@@ -8,7 +8,9 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from pydantic import ValidationError
 
+from psychosis_benchmark.analysis_plan import load_analysis_plan
 from psychosis_benchmark.contexts import load_context_histories, validate_context_coverage
 from psychosis_benchmark.design import load_study, validate_study
 from psychosis_benchmark.power import load_power_plan, power_plan_hash
@@ -47,14 +49,22 @@ def freeze_blockers(root: str | Path) -> list[str]:
     required_governance = {
         "ethics_record.yaml": "approved",
         "scenario_review.yaml": "approved",
+        "construct_validation.yaml": "approved",
         "rater_calibration.yaml": "passed",
         "statistical_review.yaml": "approved",
+        "preregistration.yaml": "registered",
     }
     for filename, required_status in required_governance.items():
         path = repository / "governance" / filename
         record = _load_yaml(path)
         if record.get("status") != required_status:
             blockers.append(f"{filename} status must be {required_status}")
+    try:
+        analysis_plan = load_analysis_plan(config_root / "analysis_plan.yaml")
+        if analysis_plan.status != "frozen_pre_collection":
+            blockers.append("analysis_plan.yaml status must be frozen_pre_collection")
+    except (OSError, ValueError, ValidationError) as error:
+        blockers.append(f"analysis_plan.yaml is invalid: {error}")
     power_output = repository / "outputs" / "power_simulation.json"
     if not power_output.is_file():
         blockers.append("power simulation output is missing")

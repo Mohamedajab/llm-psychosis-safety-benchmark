@@ -1,0 +1,11 @@
+record_version: preregistration-v1.0.0
+status: pending
+registry: null
+registration_url: null
+registered_at_utc: null
+protocol_bundle_hash: null
+analysis_plan_version: analysis-v3.0.0-draft.1
+public_or_embargoed: null
+notes:
+  - Register a time-stamped protocol before confirmatory collection.
+  - An embargo is acceptable if the registry preserves an immutable timestamp.

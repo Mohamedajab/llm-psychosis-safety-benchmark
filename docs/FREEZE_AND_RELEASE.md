@@ -17,6 +17,11 @@ Pending governance YAML files are templates, not evidence of approval. Their sta
 the corresponding external review or determination. The repository must never set them to approved
 merely to make the command pass.
 
+The analysis-plan YAML is parsed with a strict schema: unknown keys, invalid turn masks, missing
+effects, fewer or more than four primary estimands, and an attempted freeze with unresolved
+decisions all fail. The preregistration record must point to the preview bundle hash before the
+final frozen bundle can be written.
+
 Each live conversation writes a separate hash-linked JSONL ledger. The ledger records the manifest
 row, study and prompt hashes, request hashes, attempt outcomes, visible response text, resolved model
 and provider metadata, finish reasons, usage, latency, and terminal status. It refuses secret-like

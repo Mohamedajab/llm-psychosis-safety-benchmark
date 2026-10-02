@@ -34,6 +34,11 @@ Study V2 compared two free endpoints across nine six-turn scripts. V3 adds:
 - provider pinning, catalogue snapshots, cost estimates, immutable manifests, and drift sentinels;
 - a distinct interface-validation track, because an API is not a consumer chat product;
 - a paper-readiness gate that prevents prose from outrunning the evidence.
+- an OSF-ready preregistration record with four named primary estimands and a multiplicity family;
+- HMAC-blinded annotation packets, private linkage keys, strict rating records, and leakage checks;
+- reference implementations for weighted agreement, matched randomisation tests, cluster bootstrap
+  intervals, and Holm adjustment;
+- a construct-validation gate that cannot be self-approved by the repository author.
 
 The audit behind these changes is in
 [`docs/BENCHMARK_GAP_ANALYSIS.md`](docs/BENCHMARK_GAP_ANALYSIS.md). The prospective design is in
@@ -58,6 +63,7 @@ config/study-v3/
   design.yaml              Factor definitions and run profiles
   models.yaml              Exact model slugs, prices, and panel roles
   rubric.yaml              Prospective behavioural rubric
+  analysis_plan.yaml       Estimands, multiplicity, missingness, and frozen seeds
   scenarios/               Six paired scenario families
 docs/
   BENCHMARK_GAP_ANALYSIS.md
@@ -65,11 +71,16 @@ docs/
   ANNOTATION_PROTOCOL_V3.md
   MODEL_SELECTION.md
   PAPER_READINESS_GATE.md
+  PREREGISTRATION.md
+  CONSTRUCT_VALIDATION.md
+  PUBLICATION_REPORTING.md
   WRITING_STANDARD.md
 src/psychosis_benchmark/
   schema.py                Strict configuration contracts
   design.py                Validation and deterministic manifest generation
   costing.py               Transparent upper-bound cost estimates
+  annotation.py            Blinding and strict human-rating contracts
+  statistics.py            Auditable agreement and sensitivity-analysis primitives
 scripts/benchmark.py       Command-line entry point
 tests/                     Offline validation tests
 ```
@@ -104,6 +115,10 @@ ceiling from declared token budgets and catalogue prices; it is not a bill forec
    captured chat-interface subset. These analyses are secondary.
 5. **Paper drafting** begins only after the readiness gate passes. A manuscript is deliberately
    absent at present.
+
+The current configuration is still blocked. In particular, the analysis plan is a draft, the
+construct review and rater calibration have not happened, and no preregistration exists. Those
+records are safeguards, not boxes that software can legitimately mark complete.
 
 ## Evidence boundaries
 

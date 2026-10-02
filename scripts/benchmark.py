@@ -11,6 +11,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from psychosis_benchmark.analysis_plan import load_analysis_plan  # noqa: E402
 from psychosis_benchmark.costing import estimate_costs  # noqa: E402
 from psychosis_benchmark.design import (  # noqa: E402
     StudyConfigurationError,
@@ -46,7 +47,9 @@ def main(argv: list[str] | None = None) -> int:
         study = _load(args)
         report = validate_study(study)
         if args.command == "validate":
+            analysis_plan = load_analysis_plan(args.config_root / "analysis_plan.yaml")
             print(f"study hash: {canonical_hash(study)}")
+            print(f"analysis plan: {analysis_plan.plan_version} ({analysis_plan.status})")
             print(f"scenario families: {len(study.scenarios)}")
             print(f"screening models: {len(study.models.models)}")
             for warning in report.warnings:
@@ -82,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
             print(f"TOTAL\t\t\t\t\t{total:.4f}")
             return 0
-    except StudyConfigurationError as error:
+    except (StudyConfigurationError, OSError, ValueError) as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
     return 1

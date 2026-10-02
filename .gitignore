@@ -11,4 +11,5 @@ outputs/*.jsonl
 data/raw/
 data/private/
 data/blinding_maps/
+data/annotation_packets/
 !outputs/.gitkeep

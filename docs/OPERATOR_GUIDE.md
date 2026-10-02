@@ -88,9 +88,39 @@ bundle with:
 python scripts/freeze_protocol.py --write protocol/study-v3.0.0/bundle.json
 ```
 
+## 7. Prepare blinded annotation
+
+First transform verified ledgers into source-item JSONL that satisfies the strict
+`SourceAnnotationItem` contract. Then set a secret of at least 32 bytes in
+`BENCHMARK_BLINDING_SECRET` and run:
+
+```text
+python scripts/prepare_annotation.py \
+  --input data/private/source-items.jsonl \
+  --rater-packet data/annotation_packets/study-v3.jsonl \
+  --private-key data/blinding_maps/study-v3-key.jsonl \
+  --rubric-version psychosis-response-rubric-v3.0.0-alpha.1 \
+  --seed 20261002
+```
+
+The command refuses to overwrite files. Give raters only the packet. Keep the secret and private
+key from raters, version control, and anyone fitting the locked analysis before ratings close.
+
+After both raters submit strict `RatingRecord` JSONL files, calculate agreement before adjudication:
+
+```text
+python scripts/report_agreement.py \
+  data/private/ratings-rater-a.jsonl \
+  data/private/ratings-rater-b.jsonl \
+  --output outputs/pre-adjudication-agreement.json
+```
+
+This reports exact agreement, linearly weighted Cohen kappa, numeric-pair counts, and separate N/A
+decision agreement for P2 and P3. It fails on duplicate or incomplete pairs.
+
 ## Current boundary
 
-The collector is intentionally single-run and sequential. It does not yet schedule the whole
-manifest, create annotation blocks, fit the registered mixed-effects models, or publish a
-leaderboard. Those features should follow pilot validation of the evidence format instead of being
-added before the storage and recovery semantics are tested.
+The collector is intentionally single-run and sequential. The repository can build annotation
+blocks and agreement reports, but it does not yet schedule the whole manifest or fit the proposed
+mixed-effects models. It will not publish a leaderboard: model ranking is secondary and cannot
+replace the registered presentation and context estimands.

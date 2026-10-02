@@ -8,8 +8,11 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 - [ ] Confirmatory and secondary estimands separated
 - [ ] Sample-size simulation committed with seed and rule
 - [ ] Analysis plan and fallbacks frozen
+- [ ] Four primary estimands and their Holm family registered
 - [ ] Ethics determination recorded
 - [ ] Clinical and lived-experience scenario review completed
+- [ ] Construct validity and blinded manipulation check completed
+- [ ] Time-stamped preregistration points to the bundle hash
 - [ ] Protocol bundle hashed
 
 ## Models and collection
@@ -27,6 +30,7 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 - [ ] Rater training and safety procedure completed
 - [ ] Second calibration set passes thresholds
 - [ ] Two blinded ratings exist for all confirmatory items
+- [ ] Automated leakage audit passes on the exact rater packet
 - [ ] Agreement calculated before adjudication
 - [ ] Raw and adjudicated ratings retained
 - [ ] LLM judges kept supplementary
@@ -36,6 +40,7 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 - [ ] Clean-environment analysis passes
 - [ ] Exclusions are machine-readable
 - [ ] Registered diagnostics and fallbacks reported
+- [ ] Primary, secondary, sensitivity, and post hoc analyses are labelled in outputs
 - [ ] Effect sizes and intervals produced
 - [ ] Public data rebuild every reported number without API calls
 - [ ] Tables and figures reproduce from a clean clone

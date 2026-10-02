@@ -1,0 +1,12 @@
+record_version: construct-validation-v1.0.0
+status: pending
+clinical_reviewers: 0
+lived_experience_reviewers: 0
+methodological_reviewers: 0
+scenario_content_validity_complete: false
+rubric_content_validity_complete: false
+cognitive_interviews_complete: false
+review_reference: null
+notes:
+  - This file records completion only; reviewer identities and raw feedback belong in controlled storage.
+  - Repository maintainers cannot self-approve this gate.

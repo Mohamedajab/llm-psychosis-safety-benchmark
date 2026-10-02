@@ -19,6 +19,9 @@ def test_draft_protocol_is_explicitly_blocked() -> None:
     assert "confirmatory model panel has not been selected" in blockers
     assert "ethics_record.yaml status must be approved" in blockers
     assert "scenario_review.yaml status must be approved" in blockers
+    assert "construct_validation.yaml status must be approved" in blockers
+    assert "preregistration.yaml status must be registered" in blockers
+    assert "analysis_plan.yaml status must be frozen_pre_collection" in blockers
     assert "deep_history_96 has no authored context history" in blockers
 
 

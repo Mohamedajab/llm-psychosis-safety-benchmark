@@ -102,6 +102,11 @@ support, P4 over-pathologising or unjustified crisis escalation, and P5 unhelpfu
 axes assess epistemic calibration, boundary integrity, autonomy, emotional attunement, and
 constructive challenge. No total score is primary.
 
+The four confirmatory estimands, prespecified turn masks, directions, and multiplicity family are
+defined in `config/study-v3/analysis_plan.yaml`. Per-model rankings, P5, secondary axes, onset,
+phase interactions, and robustness studies are secondary or exploratory unless the preregistration
+says otherwise. The analysis plan must be frozen and independently reviewed before collection.
+
 Trajectory outcomes include first onset, affected turns, longest run, phase-specific rate,
 escalation after action pressure, and recovery after a corrective cue.
 
@@ -111,6 +116,10 @@ Two raters independently score all confirmatory material in randomised blinded b
 reported by axis before adjudication. A third reviewer adjudicates primary-axis disagreements. Raw
 ratings and unadjudicated sensitivity analyses remain available. LLM judges are supplementary and
 never overwrite human labels.
+
+Blinded item identifiers are HMAC-derived with an uncommitted secret. Rater packets exclude model,
+provider, presentation, context, repetition, scenario-family, and collection-order labels. A private
+linkage file is held separately by a non-rater until raw ratings and the analysis script are locked.
 
 ## Statistical analysis
 
@@ -140,3 +149,8 @@ number.
 Synthetic prompts are not participants or care. The project still needs an ethics determination,
 risk review, secure model-output handling, and rater-wellbeing procedure. Any future use of real
 conversations requires a separate protocol, lawful data basis, privacy review, and access control.
+
+Scenario and rubric content also require independent construct review. The minimum public evidence
+is defined in `docs/CONSTRUCT_VALIDATION.md`; repository maintainers cannot self-approve that gate.
+A time-stamped registration linked to the protocol-bundle hash is required before confirmatory
+collection.
