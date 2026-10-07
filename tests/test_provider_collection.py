@@ -54,7 +54,11 @@ def test_payload_disables_fallbacks_and_uses_exact_slug() -> None:
         provider_pin=None,
     )
     payload = transport.requests[0]["body"]
-    assert payload["provider"] == {"allow_fallbacks": False, "require_parameters": True}
+    assert payload["provider"] == {
+        "allow_fallbacks": False,
+        "require_parameters": True,
+        "max_price": {"prompt": 0.10, "completion": 0.40},
+    }
     assert payload["model"] == "example/model"
     assert result.text == "hello"
     assert "test-key" not in json.dumps(result.__dict__)

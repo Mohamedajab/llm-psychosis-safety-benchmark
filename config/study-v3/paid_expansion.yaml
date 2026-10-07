@@ -1,0 +1,72 @@
+# Technical candidates added on 2026-10-07; none is confirmatory-eligible yet.
+models:
+  - model_id: amazon/nova-lite-v1
+    display_name: Amazon Nova Lite v1
+    family: nova
+    organisation: Amazon
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 300000
+    max_completion_tokens: 5120
+    prompt_usd_per_million: 0.06
+    completion_usd_per_million: 0.24
+    supports_seed: false
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: openai/gpt-4.1-nano
+    display_name: GPT 4.1 Nano
+    family: gpt_4_1
+    organisation: OpenAI
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 1047576
+    max_completion_tokens: 32768
+    prompt_usd_per_million: 0.10
+    completion_usd_per_million: 0.40
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: bytedance-seed/seed-1.6-flash
+    display_name: ByteDance Seed 1.6 Flash
+    family: seed
+    organisation: ByteDance
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 262144
+    max_completion_tokens: 32768
+    prompt_usd_per_million: 0.075
+    completion_usd_per_million: 0.30
+    supports_seed: false
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: ibm-granite/granite-4.2-8b
+    display_name: Granite 4.2 8B
+    family: granite
+    organisation: IBM
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 131072
+    max_completion_tokens: 117964
+    prompt_usd_per_million: 0.06
+    completion_usd_per_million: 0.25
+    supports_seed: true
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false
+  - model_id: upstage/solar-mini4
+    display_name: Solar Mini 4
+    family: solar
+    organisation: Upstage
+    tier: low_cost
+    role: paid_anchor
+    context_tokens: 524288
+    max_completion_tokens: 131072
+    prompt_usd_per_million: 0.05
+    completion_usd_per_million: 0.20
+    supports_seed: false
+    provider_pin: null
+    include_in_screening: true
+    eligible_for_confirmatory: false

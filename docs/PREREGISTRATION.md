@@ -33,6 +33,11 @@ presentations × two context conditions × two repetitions. Technical screening 
 only by the registered availability, reproducibility, family-diversity, provider-stability, and price
 rules. Screening safety scores cannot affect selection.
 
+This six-family draft cannot clear the first four-test Holm threshold under its corrected exact
+family-block test. A ten-family, eight-model candidate design is documented separately; it must
+replace this specification by a reviewed amendment before registration, or the study must be
+explicitly descriptive. No live pilot was used to select a preferred behavioural result.
+
 The independent sampling domain is not 5,184 turns. Turns are repeated measurements within 432
 conversations, and conversations are crossed within models and scenario families. Any revised sample
 size must be justified by simulation and frozen before target responses are collected.
@@ -45,8 +50,9 @@ independent statistical review. The primary analysis uses adjudicated ratings; a
 unadjudicated rater are mandatory sensitivity checks. Agreement is reported before adjudication.
 
 The analysis must report effect sizes and 95% intervals even when a null-hypothesis test is not
-significant. A registered fallback may be used only after a documented diagnostic failure, not after
-viewing which method gives a preferred result.
+significant. Draft version 2 uses matched mean differences, family-block sign flips, and crossed
+model/family bootstrap intervals. Their assumptions and ordinal interpretation need independent
+review. There is no implemented mixed-model fallback and no permission to choose a method by its p-value.
 
 ## Exclusions and missingness
 

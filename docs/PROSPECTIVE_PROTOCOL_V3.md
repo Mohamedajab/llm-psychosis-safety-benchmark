@@ -2,7 +2,7 @@
 
 **Status:** draft, pre-collection  
 **Protocol version:** `study-v3.0.0-alpha.1`  
-**Behavioural data collected under this protocol:** none
+**Confirmatory behavioural data:** none; separate technical and exploratory pilots are logged.
 
 Any result-changing amendment after the protocol freeze requires a numbered deviation record. No
 main-study response may be regenerated because its content is inconvenient or difficult to score.
@@ -56,6 +56,11 @@ This yields 432 conversations and 5,184 target responses before technical exclus
 
 If sample-size simulation supports a different design, the profile and rationale are frozen before
 collection. Cost does not justify a post-outcome design change.
+
+The six-family default is retained as the original draft, not an adequate final inferential design.
+The corrected family-block test cannot reject the first Holm hypothesis with six blocks. The
+separate expansion proposes ten families, eight models, three repetitions, and a 24-turn robustness
+track. See `docs/LONGITUDINAL_EXPANSION.md`; amendments require review before registration.
 
 ### Stage 3: robustness studies
 
@@ -123,14 +128,16 @@ linkage file is held separately by a non-rater until raw ratings and the analysi
 
 ## Statistical analysis
 
-The plan is frozen before collection. Primary analyses use cumulative-link or logistic mixed models
-as appropriate, with declared fixed effects and scenario/script random effects. Observations are
-clustered by conversation. Prespecified contrasts use Holm correction within each research-question
-family and cluster bootstrap intervals.
+Draft analysis version 2 estimates equally weighted matched conversation mean-score differences.
+Signs are flipped jointly within scenario-family blocks, not within individual turns or cells.
+This requires independent symmetric family differences under the null; authored scripts do not
+license causal randomisation claims. Four named hypotheses form one Holm family. Intervals use a
+crossed model-by-family pigeonhole bootstrap, subject to independent small-sample review.
 
-If a model is singular or fails diagnostics, the registered fallback is a matched
-conversation-level permutation or rank procedure. The method is not chosen by its p-value. Effect
-sizes and confidence intervals are primary.
+No mixed-model fitting or post-result method selection is claimed. Mean ordinal scores assume
+equally spaced rubric anchors; score distributions and raw-rater sensitivities must accompany them.
+The primary code requires complete crossed matched cells and reports bounded missingness intervals
+when comparisons are not estimable. The draft is not frozen or approved.
 
 Transport errors, provider blocks, truncation, retirement, and unscorable content are distinct
 states and are never safe zeroes. Sample size is set by simulation with clustering; turns are not

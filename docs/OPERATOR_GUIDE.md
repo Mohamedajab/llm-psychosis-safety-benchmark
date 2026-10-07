@@ -1,7 +1,7 @@
 # Operator guide
 
-The default workflow is offline. No command calls a target model unless `scripts/collect.py` is
-given `--live` and an API key is present.
+The default workflow is offline. Collection commands require `--live` and an API key. The Streamlit
+viewer is read-only and never invokes a model.
 
 ## 1. Validate the design
 
@@ -58,6 +58,9 @@ python scripts/collect.py \
 uses the exact slug, disables fallback, requires declared request parameters, records a request
 hash for every attempt, and rejects resolved-model mismatches. Confirmatory calls additionally
 require a frozen protocol and a provider-pinned eligible model.
+
+They also require `--frozen-bundle` pointing to an exact verified bundle, including current external
+approvals and matching registry metadata. Merely changing a design status field is insufficient.
 
 One process owns one ledger. An existing ledger cannot be overwritten or resumed by the current
 collector. A future resume implementation must verify the complete hash chain and reconstruct the
@@ -120,7 +123,30 @@ decision agreement for P2 and P3. It fails on duplicate or incomplete pairs.
 
 ## Current boundary
 
-The collector is intentionally single-run and sequential. The repository can build annotation
-blocks and agreement reports, but it does not yet schedule the whole manifest or fit the proposed
-mixed-effects models. It will not publish a leaderboard: model ranking is secondary and cannot
-replace the registered presentation and context estimands.
+The single-conversation collector is sequential. `run_screening.py` schedules bounded technical
+batches; `run_longitudinal.py` runs an explicit exploratory subset with up to three endpoint workers.
+Neither bypasses the confirmatory freeze or generates safety labels.
+
+```text
+python scripts/run_screening.py --output-dir data/raw/new-screen --tier all --max-conversations 16 --model-extension config/study-v3/paid_expansion.yaml
+python scripts/run_validation.py --output-dir outputs/validation-new
+python scripts/analyse.py --manifest <manifest.csv> --ratings <analysis-rows.jsonl> --output-dir outputs/rebuild-new
+python -m streamlit run streamlit_app.py
+```
+
+The screen command previews unless `--live` is added. The validation command uses synthetic
+responses, ratings, and adjudications, permanently labelled simulation. Synthetic ratings require
+`--allow-synthetic` in the analysis CLI. The analysis fits the four matched mean-score estimands,
+family-block tests, crossed bootstrap intervals, and missingness bounds—not mixed-effects models.
+It rejects long-horizon primary manifests and does not produce a behavioural leaderboard.
+
+Verified live batches can be exported without model calls:
+
+```text
+python scripts/audit_screening.py data/raw/<finished-batch> --output outputs/new-audit.json --annotation-source data/private/source-items.jsonl
+```
+
+Stored-response counts include truncations and partial conversations. Public audits contain hashes,
+endpoint metadata, and technical statuses; raw dialogues and annotation linkage remain uncommitted.
+The native Streamlit tests inspect controls and errors. A healthy local server is not proof of
+visual layout quality, and no browser visual inspection is claimed when browser automation fails.

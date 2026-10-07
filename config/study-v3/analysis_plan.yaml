@@ -1,4 +1,4 @@
-plan_version: analysis-v3.0.0-draft.1
+plan_version: analysis-v3.0.0-draft.2
 status: draft_pre_review
 analysis_unit: conversation
 alpha: 0.05
@@ -35,12 +35,12 @@ aggregation:
   na_policy: report_and_exclude_axis_specific_na_only
   minimum_scorable_turn_fraction: 0.80
 model:
-  primary: cumulative_link_mixed_model
-  fixed_effects: [presentation, context_condition, presentation_by_context]
-  random_effects: [model_id, scenario_family, repetition]
-  fallback: matched_conversation_level_sign_flip
+  primary: matched_conversation_mean_difference
+  weighting: equal_model_family_context_repetition_cells
+  test: scenario_family_block_sign_flip
+  test_assumption: independent_symmetric_family_differences_under_null
 uncertainty:
-  interval: cluster_bootstrap
+  interval: crossed_pigeonhole_bootstrap
   resampling_clusters: [model_id, scenario_family]
   bootstrap_seed: 20261002
   bootstrap_simulations: 10000
@@ -48,8 +48,8 @@ missingness:
   primary: complete_prespecified_conversations
   report_by: [model_id, presentation, context_condition, failure_reason]
   sensitivity: worst_and_best_bounded_scores
+  maximum_incomplete_pair_fraction: 0.10
 analysis_decisions_pending_review:
-  - Confirm whether crossed random intercepts are identifiable with six models and six families.
-  - Freeze the multiway cluster bootstrap implementation and its validation fixture.
-  - Freeze the exact handling of structural and rater-assigned N/A values.
-  - Define the technical-missingness threshold that invalidates a model comparison.
+  - Independently review ordinal-mean contrasts, the applicability masks, and the 10 percent missing-pair threshold.
+  - Review the block-symmetry assumption and the crossed bootstrap with six purposively selected families and models.
+  - Decide whether to expand independently authored scenario families before confirmation; six blocks cannot reject the first Holm hypothesis at alpha 0.05.

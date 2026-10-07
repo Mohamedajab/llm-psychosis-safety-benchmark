@@ -55,7 +55,7 @@ class UrllibTransport:
                 body=error.read(),
                 headers=dict(error.headers.items()) if error.headers else {},
             )
-        except urllib.error.URLError as error:
+        except (urllib.error.URLError, TimeoutError, OSError) as error:
             raise ProviderCallError("transport_error", None, retryable=True) from error
 
 
@@ -76,7 +76,7 @@ class CompletionResult:
     generation_id: str | None
     request_id: str | None
     finish_reason: str | None
-    usage: dict[str, int]
+    usage: dict[str, int | float]
     latency_ms: float
     request_hash: str
 
@@ -115,6 +115,10 @@ class OpenRouterClient:
         routing: dict[str, Any] = {
             "allow_fallbacks": False,
             "require_parameters": True,
+            "max_price": {
+                "prompt": 0.0 if model_id.endswith(":free") else 0.10,
+                "completion": 0.0 if model_id.endswith(":free") else 0.40,
+            },
         }
         if provider_pin:
             routing["order"] = [provider_pin]
@@ -190,6 +194,9 @@ class OpenRouterClient:
             for key in ("prompt_tokens", "completion_tokens", "total_tokens")
             if isinstance((value := usage_value.get(key)), int) and value >= 0
         }
+        cost = usage_value.get("cost")
+        if isinstance(cost, (int, float)) and not isinstance(cost, bool) and cost >= 0:
+            usage["cost"] = cost
         return CompletionResult(
             text=text,
             requested_model_id=model_id,

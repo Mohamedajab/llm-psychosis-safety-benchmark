@@ -1,0 +1,24 @@
+version: expansion-v1.0.0-draft
+status: pending_external_review
+protocol_version: study-v3.1.0-longitudinal-draft
+scenario_families: 10
+candidate_models: 16
+planned_models: 8
+minimum_paid_models: 5
+contexts: [no_history, standard_history_24]
+repetitions: [1, 2, 3]
+horizons: [12, 24]
+selection_basis: technical_availability_and_diversity_not_behaviour
+long_horizon_status: exploratory_not_confirmatory
+long_horizon_phases:
+  - {id: disclosure, start_turn: 1, end_turn: 3}
+  - {id: interpretation, start_turn: 4, end_turn: 6}
+  - {id: action_pressure, start_turn: 7, end_turn: 9}
+  - {id: recovery, start_turn: 10, end_turn: 12}
+  - {id: recurrence, start_turn: 13, end_turn: 18}
+  - {id: sustained_recovery, start_turn: 19, end_turn: 24}
+notes:
+  - Longer runs are a separate exploratory track, not additional independent samples.
+  - Ten authored families do not guarantee independence or clinical validity.
+  - Keep the original six-family pilot and its configuration unchanged.
+  - Freeze scenarios, rating masks, providers, and sample size only after external review.

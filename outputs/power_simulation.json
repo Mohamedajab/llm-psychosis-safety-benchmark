@@ -1,31 +1,39 @@
 {
-  "adjusted_alpha": 0.016666666666666666,
-  "analysis_unit": "conversation-level paired difference",
+  "adjusted_alpha": 0.0125,
+  "analysis_unit": "scenario-family block mean of matched conversation differences",
   "cluster_count_per_presentation": 144,
-  "plan_hash": "2ce1048aa90cbd902463554af37af17ff17422b80350a4dd195cf889bb6e5b41",
-  "plan_version": "power-plan-v1.0.0-draft",
+  "independent_test_blocks": 6,
+  "minimum_two_sided_p": 0.03125,
+  "plan_hash": "b20827a110b42c14448ca09cf018251cbc3772f266d0a5ac7bbe60cb2bc295e6",
+  "plan_version": "power-plan-v2.0.0-draft",
   "results": [
+    {
+      "approximate_odds_ratio": 1.0,
+      "contrast_log_odds": 0.0,
+      "estimated_detection_probability": 0.0,
+      "mean_probability_difference": 0.0030636574074074073
+    },
     {
       "approximate_odds_ratio": 1.2840254166877414,
       "contrast_log_odds": 0.25,
-      "estimated_detection_probability": 0.5125,
-      "mean_absolute_probability_difference": 0.042019675925925926
+      "estimated_detection_probability": 0.0,
+      "mean_probability_difference": 0.04433420138888889
     },
     {
       "approximate_odds_ratio": 1.4918246976412703,
       "contrast_log_odds": 0.4,
-      "estimated_detection_probability": 0.9195,
-      "mean_absolute_probability_difference": 0.06865219907407408
+      "estimated_detection_probability": 0.0,
+      "mean_probability_difference": 0.07076359953703704
     },
     {
       "approximate_odds_ratio": 1.8221188003905089,
       "contrast_log_odds": 0.6,
-      "estimated_detection_probability": 0.999,
-      "mean_absolute_probability_difference": 0.1072494212962963
+      "estimated_detection_probability": 0.0,
+      "mean_probability_difference": 0.10860329861111112
     }
   ],
   "schema_version": "1.0.0",
   "seed": 20261001,
   "simulations": 2000,
-  "warning": "Planning sensitivity only. This normal approximation is not the registered final mixed-effects analysis."
+  "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
 }

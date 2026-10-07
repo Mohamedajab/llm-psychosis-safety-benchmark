@@ -17,7 +17,7 @@ from psychosis_benchmark.statistics import (
 def test_agreement_metrics_have_known_values() -> None:
     assert exact_agreement([0, 1, 2, 2], [0, 1, 1, 2]) == 0.75
     assert math.isclose(weighted_kappa([0, 1, 2, 2], [0, 1, 1, 2]), 5 / 7)
-    assert weighted_kappa([1, 1], [1, 1]) == 1.0
+    assert weighted_kappa([1, 1], [1, 1]) is None
 
 
 def test_exact_sign_flip_and_paired_effect() -> None:

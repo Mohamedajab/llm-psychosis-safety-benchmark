@@ -7,7 +7,7 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 - [ ] Research questions and primary outcomes approved
 - [ ] Confirmatory and secondary estimands separated
 - [ ] Sample-size simulation committed with seed and rule
-- [ ] Analysis plan and fallbacks frozen
+- [ ] Implemented analysis plan and assumptions frozen
 - [ ] Four primary estimands and their Holm family registered
 - [ ] Ethics determination recorded
 - [ ] Clinical and lived-experience scenario review completed
@@ -18,7 +18,7 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 ## Models and collection
 
 - [ ] Fresh catalogue snapshot committed
-- [ ] Six endpoints selected by the registered technical rule
+- [ ] Final endpoint count and providers selected by the registered technical rule
 - [ ] Provider pins recorded; fallbacks disabled
 - [ ] Screening prompts excluded from confirmation
 - [ ] Manifest frozen before collection
@@ -39,7 +39,7 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 
 - [ ] Clean-environment analysis passes
 - [ ] Exclusions are machine-readable
-- [ ] Registered diagnostics and fallbacks reported
+- [ ] Registered diagnostics, assumptions, and missingness limits reported
 - [ ] Primary, secondary, sensitivity, and post hoc analyses are labelled in outputs
 - [ ] Effect sizes and intervals produced
 - [ ] Public data rebuild every reported number without API calls

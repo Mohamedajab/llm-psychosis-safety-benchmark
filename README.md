@@ -10,9 +10,9 @@ remote. New work follows the Study V3 protocol in this repository.
 
 ## Current status
 
-**Prospective protocol only. No Study V3 behavioural results exist.**
+**Live technical and exploratory pilots exist; no human-rated confirmatory findings exist.**
 
-The repository is not paper-ready. Collection is blocked until the protocol, scenario set,
+The repository is not paper-ready. Confirmatory collection is blocked until the protocol, scenario set,
 model/provider pins, sample-size analysis, ethics position, and human-rater plan pass the
 readiness checks in [`docs/PAPER_READINESS_GATE.md`](docs/PAPER_READINESS_GATE.md).
 
@@ -20,11 +20,40 @@ Do not cite the model list as a result or infer that a larger model panel makes 
 clinically valid. This is a synthetic behavioural audit, not a diagnostic instrument and not a
 test of outcomes in people.
 
+The 7 October technical audit covers 16 candidates, including ten paid endpoints. Nine paid
+endpoints returned responses. Of 66 planned conversations, 39 completed; 167 responses were stored,
+including partial outputs. These are availability records, not safety scores. See
+[`outputs/live_screening_2026-10-07.json`](outputs/live_screening_2026-10-07.json).
+
+## Open the research viewer
+
+```text
+python -m pip install -e .[dev,dashboard]
+python -m streamlit run streamlit_app.py
+```
+
+Open [http://127.0.0.1:8501](http://127.0.0.1:8501). The read-only viewer shows recorded evidence,
+prices, design controls, draft scenarios, and publication blockers. Local dialogues are opt-in;
+API keys and blinding maps are never displayed. The viewer makes no model calls.
+In VS Code, **Terminal → Run Task → Research: Streamlit viewer** starts the same local app.
+
+## Expanded research draft
+
+[`config/research-expansion`](config/research-expansion) proposes eight models, at least five paid
+anchors, ten scenario families, two contexts, and three repetitions. The 12-turn core would contain
+1,440 conversations and 17,280 responses. A separate 24-turn exploratory track adds recurrence and
+sustained recovery; it must not be pooled with primary estimates. Neither design is approved.
+
+The original six-family configuration is retained for reproducibility. Longer conversations do not
+create independent samples: the six-block draft cannot pass the first of four Holm tests. The
+expanded planning comparison is in [`outputs/design_sensitivity.json`](outputs/design_sensitivity.json).
+See [`docs/LONGITUDINAL_EXPANSION.md`](docs/LONGITUDINAL_EXPANSION.md) for limits and review requirements.
+
 ## What V3 changes
 
 Study V2 compared two free endpoints across nine six-turn scripts. V3 adds:
 
-- an exact-slug panel of 11 free or low-cost models from nine model families and eight organisations;
+- an original 11-endpoint frame, plus five explicitly recorded cheap paid candidates;
 - separate screening and confirmatory stages;
 - six scenario families and matched control, ambiguous, and fixed-belief variants;
 - 12-turn trajectories with explicit escalation and recovery phases;
@@ -36,7 +65,7 @@ Study V2 compared two free endpoints across nine six-turn scripts. V3 adds:
 - a paper-readiness gate that prevents prose from outrunning the evidence.
 - an OSF-ready preregistration record with four named primary estimands and a multiplicity family;
 - HMAC-blinded annotation packets, private linkage keys, strict rating records, and leakage checks;
-- reference implementations for weighted agreement, matched randomisation tests, cluster bootstrap
+- reference implementations for weighted agreement, family-block sign-flip tests, crossed bootstrap
   intervals, and Holm adjustment;
 - a construct-validation gate that cannot be self-approved by the repository author.
 
@@ -50,6 +79,11 @@ The catalogue snapshot dated 2026-09-30 contains six zero-price endpoints and fi
 anchors. Exact prices and eligibility notes are recorded in
 [`config/study-v3/models.yaml`](config/study-v3/models.yaml); the panel is not frozen merely
 because a slug appears in that file.
+
+Five additional paid candidates, checked on 2026-10-07, are in
+[`config/study-v3/paid_expansion.yaml`](config/study-v3/paid_expansion.yaml). Free price describes an
+endpoint, not an open-weights licence. Paid candidates include both hosted open-weight and proprietary
+models; no licence category is inferred from price.
 
 Free endpoints can disappear, throttle heavily, or change provider. Confirmatory collection
 requires a resolved provider pin and a successful preflight for every included endpoint. Router
@@ -81,6 +115,9 @@ src/psychosis_benchmark/
   costing.py               Transparent upper-bound cost estimates
   annotation.py            Blinding and strict human-rating contracts
   statistics.py            Auditable agreement and sensitivity-analysis primitives
+  analysis.py              Matched estimates, missingness bounds, trajectories
+  expansion.py             Explicit scenario and long-horizon draft overlays
+streamlit_app.py            Read-only local research viewer
 scripts/benchmark.py       Command-line entry point
 tests/                     Offline validation tests
 ```
@@ -96,6 +133,7 @@ python scripts/benchmark.py manifest --profile screening --output outputs/screen
 python scripts/benchmark.py estimate-cost --profile screening
 python scripts/check_live_catalogue.py
 python scripts/simulate_power.py --output outputs/power_simulation.json
+python scripts/run_validation.py --output-dir outputs/validation-new
 python scripts/freeze_protocol.py
 python -m pytest -q
 ```

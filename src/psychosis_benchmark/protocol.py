@@ -43,7 +43,19 @@ def freeze_blockers(root: str | Path) -> list[str]:
     report = validate_study(study)
     blockers = [*report.errors, *report.warnings]
     histories = load_context_histories(config_root / "contexts")
-    context_errors, context_warnings = validate_context_coverage(study, histories)
+    primary_contexts = study.design.profiles["confirmatory"].contexts
+    context_study = study.model_copy(
+        update={
+            "design": study.design.model_copy(
+                update={
+                    "contexts": {
+                        key: value for key, value in study.design.contexts.items() if key in primary_contexts
+                    }
+                }
+            )
+        }
+    )
+    context_errors, context_warnings = validate_context_coverage(context_study, histories)
     blockers.extend(context_errors)
     blockers.extend(context_warnings)
     required_governance = {
@@ -59,6 +71,15 @@ def freeze_blockers(root: str | Path) -> list[str]:
         record = _load_yaml(path)
         if record.get("status") != required_status:
             blockers.append(f"{filename} status must be {required_status}")
+    registration = _load_yaml(repository / "governance" / "preregistration.yaml")
+    if registration.get("status") == "registered":
+        if not str(registration.get("registration_url", "")).startswith("https://"):
+            blockers.append("preregistration lacks a registry URL")
+        if not registration.get("registered_at_utc"):
+            blockers.append("preregistration lacks a timestamp")
+        if registration.get("protocol_bundle_hash") != build_bundle_preview(repository)["bundle_hash"]:
+            blockers.append("preregistration hash does not match the protocol content")
+    analysis_plan = None
     try:
         analysis_plan = load_analysis_plan(config_root / "analysis_plan.yaml")
         if analysis_plan.status != "frozen_pre_collection":
@@ -76,6 +97,24 @@ def freeze_blockers(root: str | Path) -> list[str]:
                 blockers.append("power simulation output does not match power.yaml")
             if output.get("simulations", 0) < 1000:
                 blockers.append("power simulation used fewer than 1000 iterations")
+            if analysis_plan is not None and plan.planned_primary_contrasts != len(
+                analysis_plan.primary_estimands
+            ):
+                blockers.append("power and analysis plans have different primary contrast counts")
+            expected_design = {
+                "models": study.design.confirmatory_panel.required_models,
+                "scenario_families": len(study.scenarios),
+                "contexts": len(study.design.profiles["confirmatory"].contexts),
+                "repetitions": len(study.design.profiles["confirmatory"].repetitions),
+                "turns_per_conversation": study.design.phases[-1].end_turn,
+            }
+            for field, expected in expected_design.items():
+                if getattr(plan, field) != expected:
+                    blockers.append(f"power plan {field} does not match the confirmatory design")
+            if analysis_plan is not None and 2 / 2 ** len(study.scenarios) > (
+                analysis_plan.alpha / len(analysis_plan.primary_estimands)
+            ):
+                blockers.append("primary block test cannot attain the first Holm threshold")
         except (json.JSONDecodeError, ValueError) as error:
             blockers.append(f"power simulation output is invalid: {error}")
     return sorted(set(blockers))
@@ -88,6 +127,7 @@ def protocol_file_manifest(root: str | Path) -> list[dict[str, Any]]:
         "CITATION.cff",
         "pyproject.toml",
         "config/study-v3/**/*",
+        "config/research-expansion/**/*",
         "docs/*.md",
         "governance/*.yaml",
         "scripts/*.py",
@@ -97,6 +137,9 @@ def protocol_file_manifest(root: str | Path) -> list[dict[str, Any]]:
     paths: set[Path] = set()
     for pattern in patterns:
         paths.update(path for path in repository.glob(pattern) if path.is_file())
+    # The registry metadata contains the bundle hash. Excluding that one file
+    # from the content hash avoids a self-referential hash that cannot be satisfied.
+    paths.discard(repository / "governance" / "preregistration.yaml")
     return [
         {
             "path": path.relative_to(repository).as_posix(),
@@ -129,7 +172,29 @@ def write_frozen_bundle(root: str | Path, output: str | Path) -> Path:
     path = Path(output)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(build_bundle_preview(root), indent=2, sort_keys=True) + "\n",
+        json.dumps(
+            {
+                **build_bundle_preview(root),
+                "registration": _load_yaml(Path(root) / "governance" / "preregistration.yaml"),
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
         encoding="utf-8",
     )
     return path
+
+
+def verify_frozen_bundle(root: str | Path, bundle_path: str | Path) -> str:
+    """Require current approvals and the exact content hash registered before collection."""
+    blockers = freeze_blockers(root)
+    if blockers:
+        raise ProtocolFreezeError("; ".join(blockers))
+    value = json.loads(Path(bundle_path).read_text(encoding="utf-8"))
+    expected = build_bundle_preview(root)
+    if value.get("bundle_hash") != expected["bundle_hash"] or value.get("files") != expected["files"]:
+        raise ProtocolFreezeError("frozen bundle does not match current protocol files")
+    if value.get("registration") != _load_yaml(Path(root) / "governance" / "preregistration.yaml"):
+        raise ProtocolFreezeError("frozen bundle registration differs from the recorded registry metadata")
+    return expected["bundle_hash"]

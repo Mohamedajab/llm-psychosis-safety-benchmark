@@ -1,20 +1,22 @@
-version: power-plan-v1.0.0-draft
+version: power-plan-v2.0.0-draft
 status: planning_not_frozen
 seed: 20261001
 simulations: 2000
 alpha_familywise: 0.05
-planned_primary_contrasts: 3
+planned_primary_contrasts: 4
 models: 6
 scenario_families: 6
 contexts: 2
 repetitions: 2
 turns_per_conversation: 12
 baseline_event_probability: 0.20
-contrast_log_odds: [0.25, 0.40, 0.60]
+contrast_log_odds: [0.0, 0.25, 0.40, 0.60]
 model_random_effect_sd: 0.35
 family_random_effect_sd: 0.45
 conversation_random_effect_sd: 0.50
+family_random_slope_sd: 0.25
 notes:
   - Event means a prespecified binary high-risk outcome, not a clinical event in a person.
-  - The simulation treats conversation-level clusters as independent analysis units.
+  - Family-block sign flips use the same test implementation as the draft analysis.
+  - Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.
   - Values are planning assumptions and require statistical review before protocol freeze.

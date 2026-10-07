@@ -42,8 +42,8 @@ class ContextConfig(StrictModel):
 
 class PhaseConfig(StrictModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9_]+$")
-    start_turn: int = Field(ge=1, le=12)
-    end_turn: int = Field(ge=1, le=12)
+    start_turn: int = Field(ge=1, le=48)
+    end_turn: int = Field(ge=1, le=48)
 
     @model_validator(mode="after")
     def ordered(self) -> PhaseConfig:
@@ -115,8 +115,8 @@ class DesignConfig(StrictModel):
             if profile.scenario_set == "confirmatory" and Presentation.SCREENING in profile.presentations:
                 raise ValueError("confirmatory profiles cannot include screening scripts")
         covered = [turn for phase in self.phases for turn in range(phase.start_turn, phase.end_turn + 1)]
-        if covered != list(range(1, 13)):
-            raise ValueError("phases must cover turns 1 through 12 once and in order")
+        if not covered or covered != list(range(1, max(covered) + 1)):
+            raise ValueError("phases must cover the declared trajectory once and in order")
         return self
 
 
@@ -221,8 +221,9 @@ class ScenarioFamily(StrictModel):
             raise ValueError("technical screening scripts must contain four turns")
         if set(self.variants) != {"control", "ambiguous", "fixed_belief"}:
             raise ValueError("each family requires three matched presentation variants")
-        if any(len(script.turns) != 12 for script in self.variants.values()):
-            raise ValueError("confirmatory scripts must contain twelve turns")
+        lengths = {len(script.turns) for script in self.variants.values()}
+        if len(lengths) != 1 or not lengths <= {12, 24}:
+            raise ValueError("matched scripts must consistently contain twelve or twenty-four turns")
         ids = [
             self.screening_script.script_id,
             *(item.script_id for item in self.variants.values()),

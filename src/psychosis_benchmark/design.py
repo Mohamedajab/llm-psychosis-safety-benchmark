@@ -63,8 +63,8 @@ def load_study(config_root: str | Path = DEFAULT_CONFIG_ROOT) -> StudyBundle:
 def validate_study(study: StudyBundle) -> ValidationReport:
     errors: list[str] = []
     warnings: list[str] = []
-    if len(study.scenarios) != 6:
-        errors.append(f"expected six scenario families; found {len(study.scenarios)}")
+    if len(study.scenarios) < 6:
+        errors.append(f"at least six scenario families are required; found {len(study.scenarios)}")
     family_ids = [scenario.family_id for scenario in study.scenarios]
     if len(family_ids) != len(set(family_ids)):
         errors.append("scenario family IDs must be unique")
@@ -76,13 +76,17 @@ def validate_study(study: StudyBundle) -> ValidationReport:
     if len(script_ids) != len(set(script_ids)):
         errors.append("script IDs must be globally unique")
     for scenario in study.scenarios:
+        if any(
+            len(script.turns) != study.design.phases[-1].end_turn for script in scenario.variants.values()
+        ):
+            errors.append(f"{scenario.family_id} does not match the declared trajectory horizon")
         if scenario.schema_version != study.design.scenario_schema_version:
             errors.append(f"{scenario.family_id} has the wrong schema version")
         if scenario.review_status != "frozen":
             warnings.append(f"{scenario.family_id} is not frozen after expert review")
     screening = [model for model in study.models.models if model.include_in_screening]
-    if len(screening) != 11:
-        errors.append(f"expected eleven screening models; found {len(screening)}")
+    if len(screening) < 2:
+        errors.append("at least two screening models are required")
     selected = study.design.confirmatory_panel.selected_model_ids
     if not selected:
         warnings.append("confirmatory model panel has not been selected")

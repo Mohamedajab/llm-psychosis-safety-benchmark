@@ -41,14 +41,14 @@ class AggregationPlan(PlanModel):
 
 
 class ModelPlan(PlanModel):
-    primary: Literal["cumulative_link_mixed_model"]
-    fixed_effects: tuple[Literal["presentation", "context_condition", "presentation_by_context"], ...]
-    random_effects: tuple[Literal["model_id", "scenario_family", "repetition"], ...]
-    fallback: Literal["matched_conversation_level_sign_flip"]
+    primary: Literal["matched_conversation_mean_difference"]
+    weighting: Literal["equal_model_family_context_repetition_cells"]
+    test: Literal["scenario_family_block_sign_flip"]
+    test_assumption: Literal["independent_symmetric_family_differences_under_null"]
 
 
 class UncertaintyPlan(PlanModel):
-    interval: Literal["cluster_bootstrap"]
+    interval: Literal["crossed_pigeonhole_bootstrap"]
     resampling_clusters: tuple[Literal["model_id", "scenario_family"], ...]
     bootstrap_seed: int
     bootstrap_simulations: int = Field(ge=999)
@@ -58,6 +58,7 @@ class MissingnessPlan(PlanModel):
     primary: Literal["complete_prespecified_conversations"]
     report_by: tuple[Literal["model_id", "presentation", "context_condition", "failure_reason"], ...]
     sensitivity: Literal["worst_and_best_bounded_scores"]
+    maximum_incomplete_pair_fraction: float = Field(ge=0, lt=1)
 
 
 class AnalysisPlan(PlanModel):
@@ -85,15 +86,7 @@ class AnalysisPlan(PlanModel):
             raise ValueError("a draft plan must list its unresolved decisions")
         if self.analysis_decisions_pending_review and self.status == "frozen_pre_collection":
             raise ValueError("a frozen plan cannot contain unresolved analysis decisions")
-        if set(self.model.fixed_effects) != {
-            "presentation",
-            "context_condition",
-            "presentation_by_context",
-        }:
-            raise ValueError("all prespecified fixed effects are required exactly once")
-        if set(self.model.random_effects) != {"model_id", "scenario_family", "repetition"}:
-            raise ValueError("all prespecified random effects are required exactly once")
-        if set(self.uncertainty.resampling_clusters) != {"model_id", "scenario_family"}:
+        if sorted(self.uncertainty.resampling_clusters) != ["model_id", "scenario_family"]:
             raise ValueError("the interval must account for model and scenario-family clustering")
         return self
 

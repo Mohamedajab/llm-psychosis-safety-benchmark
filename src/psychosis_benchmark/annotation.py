@@ -28,7 +28,7 @@ class SourceAnnotationItem(BaseModel):
     presentation: str = Field(min_length=1)
     context_condition: str = Field(min_length=1)
     repetition: int = Field(ge=1)
-    turn: int = Field(ge=1, le=12)
+    turn: int = Field(ge=1, le=24)
     transcript: tuple[dict[str, str], ...]
     response_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
 
@@ -57,7 +57,7 @@ class BlindedAnnotationItem(BaseModel):
     blind_conversation_id: str
     block_id: str
     position: int = Field(ge=1)
-    turn: int = Field(ge=1, le=12)
+    turn: int = Field(ge=1, le=24)
     transcript: tuple[dict[str, str], ...]
     response_hash: str
     rubric_version: str

@@ -12,6 +12,8 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from psychosis_benchmark.statistics import sign_flip_p_value
+
 
 class PowerPlan(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -32,13 +34,14 @@ class PowerPlan(BaseModel):
     model_random_effect_sd: float = Field(ge=0)
     family_random_effect_sd: float = Field(ge=0)
     conversation_random_effect_sd: float = Field(ge=0)
+    family_random_slope_sd: float = Field(default=0.25, ge=0)
     notes: tuple[str, ...] = ()
 
     @field_validator("contrast_log_odds")
     @classmethod
     def effects_are_unique_positive(cls, value: tuple[float, ...]) -> tuple[float, ...]:
-        if not value or len(value) != len(set(value)) or any(effect <= 0 for effect in value):
-            raise ValueError("contrast_log_odds must contain unique positive effects")
+        if not value or len(value) != len(set(value)) or any(effect < 0 for effect in value):
+            raise ValueError("contrast_log_odds must contain unique nonnegative effects")
         return value
 
 
@@ -70,22 +73,11 @@ def _binary_mean(rng: random.Random, probability: float, turns: int) -> float:
     return sum(rng.random() < probability for _ in range(turns)) / turns
 
 
-def _one_sample_normal_pvalue(differences: list[float]) -> float:
-    if len(differences) < 2:
-        return 1.0
-    mean = statistics.fmean(differences)
-    standard_deviation = statistics.stdev(differences)
-    if standard_deviation == 0:
-        return 0.0 if mean else 1.0
-    z_score = mean / (standard_deviation / math.sqrt(len(differences)))
-    return math.erfc(abs(z_score) / math.sqrt(2))
-
-
 def simulate_design(plan: PowerPlan) -> dict[str, object]:
     """Estimate detection probability with conversation-level paired differences.
 
-    The test approximation is deliberately simple and must not be reused as the final analysis.
-    Its purpose is to expose the design assumptions before collection.
+    Use the same family-block sign-flip test as the draft analysis. The
+    alpha/m threshold is the first Holm hurdle, not full joint four-axis power.
     """
 
     results: list[dict[str, float]] = []
@@ -102,6 +94,10 @@ def simulate_design(plan: PowerPlan) -> dict[str, object]:
                 rng.gauss(0, plan.family_random_effect_sd) for _ in range(plan.scenario_families)
             ]
             differences: list[float] = []
+            by_family: list[list[float]] = [[] for _ in range(plan.scenario_families)]
+            family_slopes = [
+                rng.gauss(effect, plan.family_random_slope_sd) for _ in range(plan.scenario_families)
+            ]
             for model_index in range(plan.models):
                 for family_index in range(plan.scenario_families):
                     shared = model_effects[model_index] + family_effects[family_index]
@@ -112,22 +108,24 @@ def simulate_design(plan: PowerPlan) -> dict[str, object]:
                             )
                             contrast_probability = _inverse_logit(
                                 baseline_logit
-                                + effect
+                                + family_slopes[family_index]
                                 + shared
                                 + rng.gauss(0, plan.conversation_random_effect_sd)
                             )
-                            differences.append(
-                                _binary_mean(rng, contrast_probability, plan.turns_per_conversation)
-                                - _binary_mean(rng, control_probability, plan.turns_per_conversation)
-                            )
+                            difference = _binary_mean(
+                                rng, contrast_probability, plan.turns_per_conversation
+                            ) - _binary_mean(rng, control_probability, plan.turns_per_conversation)
+                            differences.append(difference)
+                            by_family[family_index].append(difference)
             average_differences.append(statistics.fmean(differences))
-            if _one_sample_normal_pvalue(differences) < adjusted_alpha:
+            family_means = [statistics.fmean(values) for values in by_family]
+            if sign_flip_p_value(family_means, seed=plan.seed, simulations=999) <= adjusted_alpha:
                 detections += 1
         results.append(
             {
                 "contrast_log_odds": effect,
                 "approximate_odds_ratio": math.exp(effect),
-                "mean_absolute_probability_difference": statistics.fmean(average_differences),
+                "mean_probability_difference": statistics.fmean(average_differences),
                 "estimated_detection_probability": detections / plan.simulations,
             }
         )
@@ -137,12 +135,14 @@ def simulate_design(plan: PowerPlan) -> dict[str, object]:
         "plan_hash": power_plan_hash(plan),
         "seed": plan.seed,
         "simulations": plan.simulations,
-        "analysis_unit": "conversation-level paired difference",
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
         "cluster_count_per_presentation": cluster_count,
+        "independent_test_blocks": plan.scenario_families,
+        "minimum_two_sided_p": 2 / (2**plan.scenario_families),
         "adjusted_alpha": adjusted_alpha,
         "results": results,
         "warning": (
-            "Planning sensitivity only. This normal approximation is not the registered final "
-            "mixed-effects analysis."
+            "Planning only; detection is the first Holm hurdle for a binary proxy, not joint "
+            "ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
         ),
     }

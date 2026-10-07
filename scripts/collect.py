@@ -37,6 +37,7 @@ def main() -> int:
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--ledger", type=Path)
     parser.add_argument("--live", action="store_true", help="make provider calls; default is preview")
+    parser.add_argument("--frozen-bundle", type=Path)
     args = parser.parse_args()
 
     config_root = ROOT / "config" / "study-v3"
@@ -78,6 +79,7 @@ def main() -> int:
             system_prompt=system_prompt,
             client=OpenRouterClient(api_key),
             ledger_path=args.ledger,
+            frozen_bundle_path=args.frozen_bundle,
         )
     except CollectionError as error:
         print(f"ERROR: {error}", file=sys.stderr)

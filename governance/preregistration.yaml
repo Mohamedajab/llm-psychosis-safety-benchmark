@@ -4,7 +4,7 @@ registry: null
 registration_url: null
 registered_at_utc: null
 protocol_bundle_hash: null
-analysis_plan_version: analysis-v3.0.0-draft.1
+analysis_plan_version: analysis-v3.0.0-draft.2
 public_or_embargoed: null
 notes:
   - Register a time-stamped protocol before confirmatory collection.

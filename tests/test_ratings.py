@@ -40,8 +40,8 @@ def test_agreement_report_preserves_na_decisions() -> None:
 
 
 def test_agreement_report_rejects_incomplete_and_duplicate_ratings() -> None:
-    with pytest.raises(ValueError, match="exactly two"):
+    with pytest.raises(ValueError, match="two independent"):
         agreement_report([_rating("item-a", "rater_a")])
-    duplicate = [_rating("item-a", "rater_a"), _rating("item-a", "rater_a")]
+    duplicate = [_rating("item-a", "rater_a"), _rating("item-a", "rater_a"), _rating("item-a", "rater_b")]
     with pytest.raises(ValueError, match="duplicate rating"):
         agreement_report(duplicate)

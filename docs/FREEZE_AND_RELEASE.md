@@ -22,6 +22,11 @@ effects, fewer or more than four primary estimands, and an attempted freeze with
 decisions all fail. The preregistration record must point to the preview bundle hash before the
 final frozen bundle can be written.
 
+Registry metadata is stored separately in the bundle and excluded from the protocol-content hash:
+that record contains the hash itself. Including it would create an unsatisfiable self-referential
+hash. Verification compares both the current content manifest and the separately recorded registry
+metadata. Draft expansion configurations are included in the content manifest.
+
 Each live conversation writes a separate hash-linked JSONL ledger. The ledger records the manifest
 row, study and prompt hashes, request hashes, attempt outcomes, visible response text, resolved model
 and provider metadata, finish reasons, usage, latency, and terminal status. It refuses secret-like

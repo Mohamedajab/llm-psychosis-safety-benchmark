@@ -74,6 +74,7 @@ def collect_conversation(
     client: OpenRouterClient,
     ledger_path: str | Path,
     sleep: Callable[[float], None] = time.sleep,
+    frozen_bundle_path: str | Path | None = None,
 ) -> Path:
     ledger = Path(ledger_path)
     if ledger.exists():
@@ -85,6 +86,14 @@ def collect_conversation(
             raise CollectionError("confirmatory collection requires a frozen protocol")
         if not model.eligible_for_confirmatory or not model.provider_pin:
             raise CollectionError("confirmatory collection requires an eligible provider-pinned model")
+        if frozen_bundle_path is None:
+            raise CollectionError("confirmatory collection requires a verified frozen bundle")
+        from psychosis_benchmark.protocol import ProtocolFreezeError, verify_frozen_bundle
+
+        try:
+            verify_frozen_bundle(Path(__file__).resolve().parents[2], frozen_bundle_path)
+        except (OSError, ValueError, ProtocolFreezeError) as error:
+            raise CollectionError("frozen protocol verification failed") from error
     messages = [{"role": "system", "content": system_prompt.strip()}]
     messages.extend(messages_for_condition(study, row.context_condition, histories))
     append_event(

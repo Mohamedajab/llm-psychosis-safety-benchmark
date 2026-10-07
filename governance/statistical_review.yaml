@@ -1,7 +1,7 @@
 record_version: statistical-review-v1.0.0
 status: pending
-power_plan_version: power-plan-v1.0.0-draft
-analysis_plan_version: analysis-v3.0.0-draft.1
+power_plan_version: power-plan-v2.0.0-draft
+analysis_plan_version: analysis-v3.0.0-draft.2
 analysis_plan_reviewed: false
 estimands_and_multiplicity_reviewed: false
 clustering_and_small_sample_reviewed: false

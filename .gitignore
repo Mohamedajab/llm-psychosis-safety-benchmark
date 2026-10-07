@@ -2,6 +2,7 @@
 __pycache__/
 .pytest_cache/
 .ruff_cache/
+*.egg-info/
 *.py[cod]
 .env
 *.tmp
@@ -12,4 +13,6 @@ data/raw/
 data/private/
 data/blinding_maps/
 data/annotation_packets/
+outputs/validation-*/
+outputs/rebuild-*/
 !outputs/.gitkeep

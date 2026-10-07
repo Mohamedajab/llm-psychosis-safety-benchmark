@@ -1,0 +1,157 @@
+{
+  "all_ledgers_complete": true,
+  "analysis_input_sha256": "1783e8bcb3a8de8f5d4ec350d540d7187737cebd6ea76b78b346c4abe5b44031",
+  "annotation_blocks": 87,
+  "blinding_audit_passed": true,
+  "clinical_or_model_performance_claim": false,
+  "conversations": 432,
+  "data_origin": "synthetic_fixture",
+  "outcomes": [
+    {
+      "axis": "P1",
+      "bounded_missingness_interval": [
+        0.4965277777777778,
+        0.4965277777777778
+      ],
+      "complete_pairs": 144,
+      "confidence_interval": [
+        0.45601851851851855,
+        0.5347222222222222
+      ],
+      "contrast": "fixed_belief_minus_control",
+      "direction": "higher_is_worse",
+      "estimand": "E1_confirmation",
+      "estimate": 0.4965277777777778,
+      "family_blocks": 6,
+      "holm_p_value": 0.125,
+      "incomplete_pair_fraction": 0.0,
+      "p_value": 0.03125,
+      "planned_pairs": 144,
+      "smallest_possible_two_sided_p": 0.03125,
+      "status": "estimated",
+      "turns": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "unavailable_counts": {},
+      "units": "difference in mean ordinal score (0 to 2)"
+    },
+    {
+      "axis": "P2",
+      "bounded_missingness_interval": [
+        0.35648148148148145,
+        0.35648148148148145
+      ],
+      "complete_pairs": 144,
+      "confidence_interval": [
+        0.2777777777777778,
+        0.4305555555555556
+      ],
+      "contrast": "fixed_belief_minus_control",
+      "direction": "higher_is_worse",
+      "estimand": "E2_harm_enablement",
+      "estimate": 0.35648148148148145,
+      "family_blocks": 6,
+      "holm_p_value": 0.125,
+      "incomplete_pair_fraction": 0.0,
+      "p_value": 0.03125,
+      "planned_pairs": 144,
+      "smallest_possible_two_sided_p": 0.03125,
+      "status": "estimated",
+      "turns": [
+        7,
+        8,
+        9
+      ],
+      "unavailable_counts": {},
+      "units": "difference in mean ordinal score (0 to 2)"
+    },
+    {
+      "axis": "P3",
+      "bounded_missingness_interval": [
+        0.24189814814814817,
+        0.24189814814814817
+      ],
+      "complete_pairs": 144,
+      "confidence_interval": [
+        0.16435185185185186,
+        0.3159722222222222
+      ],
+      "contrast": "fixed_belief_minus_control",
+      "direction": "higher_is_better",
+      "estimand": "E3_safety_support",
+      "estimate": 0.24189814814814817,
+      "family_blocks": 6,
+      "holm_p_value": 0.125,
+      "incomplete_pair_fraction": 0.0,
+      "p_value": 0.03125,
+      "planned_pairs": 144,
+      "smallest_possible_two_sided_p": 0.03125,
+      "status": "estimated",
+      "turns": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "unavailable_counts": {},
+      "units": "difference in mean ordinal score (0 to 2)"
+    },
+    {
+      "axis": "P4",
+      "bounded_missingness_interval": [
+        0.29803240740740744,
+        0.29803240740740744
+      ],
+      "complete_pairs": 144,
+      "confidence_interval": [
+        0.26504629629629634,
+        0.3368055555555556
+      ],
+      "contrast": "ambiguous_minus_control",
+      "direction": "higher_is_worse",
+      "estimand": "E4_over_pathologising",
+      "estimate": 0.29803240740740744,
+      "family_blocks": 6,
+      "holm_p_value": 0.125,
+      "incomplete_pair_fraction": 0.0,
+      "p_value": 0.03125,
+      "planned_pairs": 144,
+      "smallest_possible_two_sided_p": 0.03125,
+      "status": "estimated",
+      "turns": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "unavailable_counts": {},
+      "units": "difference in mean ordinal score (0 to 2)"
+    }
+  ],
+  "raw_rater_sensitivity_completed": true,
+  "responses": 5184,
+  "synthetic_adjudications": 1149,
+  "synthetic_raw_ratings": 10368,
+  "verified_ledgers": 432
+}

@@ -1,0 +1,592 @@
+{
+  "accepted_responses": 167,
+  "batches": [
+    {
+      "batch": "live-screening-2026-10-07",
+      "catalogue_errors": [
+        "qwen/qwen3.8-27b:free: endpoint is absent from the live catalogue"
+      ],
+      "data_origin": "live_technical_screening"
+    },
+    {
+      "batch": "live-paid-screening-2026-10-07",
+      "catalogue_errors": [
+        "meta-llama/llama-3.3-70b-instruct: prompt price changed",
+        "meta-llama/llama-3.3-70b-instruct: completion price changed"
+      ],
+      "data_origin": "live_technical_screening"
+    },
+    {
+      "batch": "live-paid-expansion-2026-10-07",
+      "catalogue_errors": [],
+      "data_origin": "live_technical_screening"
+    }
+  ],
+  "behavioural_rankings_supported": false,
+  "billing_note": "Recorded costs cover stored responses only. Missing costs and failed requests require generation-level reconciliation; this report is not a bill.",
+  "completed_conversations": 39,
+  "data_origin": "live_technical_screening",
+  "models": [
+    {
+      "accepted_responses": 24,
+      "completed_conversations": 6,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791400336-0UnxSONya8uuGczsJu7L",
+        "gen-1791400338-UbSjxoBB18ixW31Eetd5",
+        "gen-1791400340-CC4JvynaLHalACr3PDKr",
+        "gen-1791400342-XZrf10rFSrUrdo4nzTdf",
+        "gen-1791400183-wC8Ej7thagn4FLT46Q77",
+        "gen-1791400183-dTrajToMA0217qATlu15",
+        "gen-1791400186-cLmwJzvhmQyqJvz31thR",
+        "gen-1791400190-SDF5fuXhhQuBlcyBl7r8",
+        "gen-1791399902-RHAwmLWWUH6tuYQwI2jB",
+        "gen-1791399904-WaNlsYpRMgLShmvQBPCF",
+        "gen-1791399907-3PHZJl9DiZdGrFkozkYY",
+        "gen-1791399909-05WWCwPagFXMhU4FkgD5",
+        "gen-1791399721-KuC114JDuCv3ItXmSnif",
+        "gen-1791399722-7TQLvaR0xUGphehNjSU1",
+        "gen-1791399723-Ztnt0H055e3ICNbt2DpV",
+        "gen-1791399725-BII82DPmqYZ6qkCR5qxJ",
+        "gen-1791400370-w1IeaiFvIvdHm4SGmBC5",
+        "gen-1791400371-TxOV9lvmY59JJvj9878C",
+        "gen-1791400372-zNgFLNOydk6UZbya69eo",
+        "gen-1791400373-ms2sQNTf0qhoCfFp0EhH",
+        "gen-1791400362-S1EobKNX9kL5encDO2Xc",
+        "gen-1791400363-lRVzaD7bnaxNvnUGNIwK",
+        "gen-1791400363-BCEQPer3l76PuqJR5gIY",
+        "gen-1791400364-gMMIUisIlewl2k4aTihB"
+      ],
+      "ledger_hashes": [
+        "b2a27c26afa1d85d843b17bc831e6648ab70a794eba07ab90272e6837b103af5",
+        "47ba4ee40ec7c155fd9fff05a568dd284fb29180318678d85c92ed038f2f6550",
+        "a9db9fa8981a4e6723291ef793e7a39c88ceb1c4dfdeceeb1a55ebcacf463b5f",
+        "4ea9818170cfdf9a96402c4a528ce2e6e9767c5867437aae59dc8147dd47fa3e",
+        "9ad1660ed87bd9b3ddb6173acd62bb6459455f506821ad08c41b9b0ce498a862",
+        "f9f4d4b33fa68a008f53da8443109d78fc56808185d4ae06025bf82e27a33c4b"
+      ],
+      "model_id": "amazon/nova-lite-v1",
+      "planned_conversations": 6,
+      "provider_names": [
+        "Amazon Bedrock"
+      ],
+      "response_cost_usd_recorded": 0.00200148,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "completed": 6
+      },
+      "tier": "low_cost",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 11,
+      "completed_conversations": 2,
+      "failure_reasons": {
+        "truncated_response": 1
+      },
+      "generation_ids": [
+        "gen-1791399919-pko0Lfk5Cg8aE55TjTTb",
+        "gen-1791399929-5dFYl0v8EZSxkY5kPK08",
+        "gen-1791399944-JHpFzeemzZEbkswE5LL2",
+        "gen-1791399953-fcBvR0Rk72rSXLbFw4od",
+        "gen-1791400203-Htjs4mv6aMj0RUlqDzlU",
+        "gen-1791400206-nBIWdAo5jlhfOFNT2Sbm",
+        "gen-1791400217-T9c5ncyWjLf6bEa6tLhD",
+        "gen-1791399733-IinYw9sYMg5b08GdBn7A",
+        "gen-1791399735-gcNbsAXNLpa4LNetAvM1",
+        "gen-1791399738-L5XKCRTsOfsmMAhCf3qa",
+        "gen-1791399742-qtHvJxyCVdsh0JPouJCE"
+      ],
+      "ledger_hashes": [
+        "17ac5ae5c96e19cbbd117258cc0d3f3ee79f9825db11e58a9fc26a774364d522",
+        "a0090b00320ba53761fa755eda0b1bb5f658ad967d1243a93298a6aa877beea8",
+        "62ff0e4f4d473fbf1efcf74afbbbde0023195d5c4e091348c6106974d905f22d"
+      ],
+      "model_id": "bytedance-seed/seed-1.6-flash",
+      "planned_conversations": 6,
+      "provider_names": [
+        "Seed"
+      ],
+      "response_cost_usd_recorded": 0.004018425000000001,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "completed": 2,
+        "incomplete": 1,
+        "not_called_after_endpoint_failure": 3
+      },
+      "tier": "low_cost",
+      "truncated_responses": 1
+    },
+    {
+      "accepted_responses": 24,
+      "completed_conversations": 6,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791399706-nqNP1U8aRHwmgCNf2n7w",
+        "gen-1791399706-UZOQvvafhNEZxouLr2ng",
+        "gen-1791399711-bsDV5nP7j5OyvAYb4tov",
+        "gen-1791399715-Q2ve8rxKr5BwyXodXGgy",
+        "gen-1791400129-qvW8dXLnZT1JKQ9KItyL",
+        "gen-1791400131-OpczDO1FVh1zjmKfWfGm",
+        "gen-1791400134-ua8FkFV7VrVWbyburLXR",
+        "gen-1791400134-htKN57Zl4EKnIRVaOo2w",
+        "gen-1791399077-cvOvRYuh4VCiL3wZf9m9",
+        "gen-1791399078-hINxKjvTKw1rOzb5mGO4",
+        "gen-1791399082-b6sWQ1n4Gg1Nl81qTXJU",
+        "gen-1791399086-PImq5xuyFFHQoP6GeM5z",
+        "gen-1791399922-WYfwPBz19cmtQz25ag6r",
+        "gen-1791399928-uaUxLiqD5YykYtorC3Wr",
+        "gen-1791399935-Lzxf48RwPGPIWgPJevEm",
+        "gen-1791399940-m4bxUhjMoAvGNLhrNiZl",
+        "gen-1791399474-QBPqKSatYq2pFlw1mJ6B",
+        "gen-1791399478-ympCQ9cqGJ5sIYzRdCgd",
+        "gen-1791399482-7ysqZFvuJFDJ90wroyyT",
+        "gen-1791399485-8lE5B8k0odCSi0kwFf97",
+        "gen-1791399987-3DAasdlYvp7ctp1qIm1s",
+        "gen-1791399989-4VzeuH6RaoPddXVHmaxU",
+        "gen-1791399991-4g5P5vyJ0SSGiJ6IV49v",
+        "gen-1791399992-AabENG2PK611jVpgW3sS"
+      ],
+      "ledger_hashes": [
+        "d5e11331dd397a85bd0fef1c947d3504f1fe002249ec78eff65aec7cd650b73e",
+        "e6731d5d9184dcf1b84b39f6bef116c58b1f1579966032601ea7c018dcba4ba3",
+        "2511ed8c0c5b0f54aae8d41ec0d1e440c094a754823670a5abda39be2797bef5",
+        "072470a139a55d501bb6c2871187a0eb628b7214247b7d67b4a7a71f7e8c7a65",
+        "0a4fbbef7885cb6bb2b58b01fd73163ffefa524a4fb8265e310cfed2671ffc51",
+        "b60dba62efb9b672fa906f1f1ef630ed170357e5a0b5c4ea8b73a1e0501a9c4a"
+      ],
+      "model_id": "google/gemini-2.5-flash-lite",
+      "planned_conversations": 6,
+      "provider_names": [
+        "Google"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 24,
+      "status_counts": {
+        "completed": 6
+      },
+      "tier": "low_cost",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 0,
+      "completed_conversations": 0,
+      "failure_reasons": {
+        "http_429": 1
+      },
+      "generation_ids": [],
+      "ledger_hashes": [
+        "ddce90611b955434122f4623e729b0ad27717463a7c3529f7efdab559f4cc434"
+      ],
+      "model_id": "google/gemma-4-26b-a4b-it:free",
+      "planned_conversations": 1,
+      "provider_names": [],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "incomplete": 1
+      },
+      "tier": "free",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 7,
+      "completed_conversations": 1,
+      "failure_reasons": {
+        "truncated_response": 1
+      },
+      "generation_ids": [
+        "gen-1791399964-a9m0Ngk4oFLuhlkUMNmV",
+        "gen-1791400004-gcAwYjuEYaUDyJqjTejQ",
+        "gen-1791400043-oOwAKPXBqDUUrFNzHaok",
+        "gen-1791399749-HGZEjf6FXKkQHYi82LPM",
+        "gen-1791399775-zEJFhXgi02aLCPm63gBl",
+        "gen-1791399807-2r9KsM2GeqcFfcdWboBa",
+        "gen-1791399833-MTrMOtiLHKDcfn5f3Auh"
+      ],
+      "ledger_hashes": [
+        "3eaa90f9427c0dc5bcb3fc8661861b79b30ef1fba9b3a372a1adf11b2d51bde1",
+        "f6bf52f642809ea7bb549e0de4ab6bb903a495f448d632c1f13ead9d89655227"
+      ],
+      "model_id": "ibm-granite/granite-4.2-8b",
+      "planned_conversations": 6,
+      "provider_names": [
+        "DeepInfra"
+      ],
+      "response_cost_usd_recorded": 0.00315192,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "completed": 1,
+        "incomplete": 1,
+        "not_called_after_endpoint_failure": 4
+      },
+      "tier": "low_cost",
+      "truncated_responses": 1
+    },
+    {
+      "accepted_responses": 4,
+      "completed_conversations": 1,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791398811-m2fkwy4duVzeGXvFtr1q",
+        "gen-1791398813-E8LiJHCzH0kAOd1Zqai6",
+        "gen-1791398816-JyeoS3HqbfXdw27Tq6DM",
+        "gen-1791398819-uY5zMMGvZvDCLu3uF28E"
+      ],
+      "ledger_hashes": [
+        "06484812f4a6a02f6fef2dd6a7e1ca099c8ae64dad125a16e73e1de1de3a799e"
+      ],
+      "model_id": "inclusionai/ling-3.0-flash-sante:free",
+      "planned_conversations": 1,
+      "provider_names": [
+        "Novita"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 4,
+      "status_counts": {
+        "completed": 1
+      },
+      "tier": "free",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 0,
+      "completed_conversations": 0,
+      "failure_reasons": {},
+      "generation_ids": [],
+      "ledger_hashes": [],
+      "model_id": "meta-llama/llama-3.3-70b-instruct",
+      "planned_conversations": 6,
+      "provider_names": [],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "not_called_catalogue_changed": 6
+      },
+      "tier": "low_cost",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 24,
+      "completed_conversations": 6,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791399866-mCZRdg6dETLVXG4Zu8NV",
+        "gen-1791399879-31d8PqqUOahjhEe6iVA3",
+        "gen-1791399900-UJlJLqjt65ZY0xCDGzDm",
+        "gen-1791399912-F7djmOlV56dVQx5FLohL",
+        "gen-1791399666-0SazFSqMqaK6KLftdrQb",
+        "gen-1791399667-WIlJtcKkZNadM7P8djQF",
+        "gen-1791399674-Xh8a1ygb7epC3rL0zxYe",
+        "gen-1791399694-O7nk5mGXIV0PTewR1RKj",
+        "gen-1791399423-fUovTxY24VyL61YDxv3f",
+        "gen-1791399430-9RLQVrL8PRLO3n7HsTLj",
+        "gen-1791399449-LMwge7Ou3V83FVJnWGkw",
+        "gen-1791399456-ajIwtwlkIQrS95ttiK5q",
+        "gen-1791399013-wIJSRbbpukYgI7zX0snE",
+        "gen-1791399015-n8s5OBwfw5nfbLziWot3",
+        "gen-1791399030-266NpXL1T92d7jCiDi3d",
+        "gen-1791399055-VqjgEmpuso6eF59iKz2i",
+        "gen-1791400087-IOu9u9sXdpymSsCQFU1T",
+        "gen-1791400098-46mFdJ271bEaiXRToPUT",
+        "gen-1791400115-uXU9pxqm06vIbV0go6m4",
+        "gen-1791400120-vFOh81JPnipE2HORbgEJ",
+        "gen-1791399982-7yhXxASg8z0O0Zm97zem",
+        "gen-1791399983-qm5FLUx0nRQPeSivCeIj",
+        "gen-1791399984-t1jMfDWNKY9hM9bsroor",
+        "gen-1791399985-Y2Yu0AOj8GqhgLHUHlKv"
+      ],
+      "ledger_hashes": [
+        "a1ecd227a05c524cd25f88b7a04b5eb43e925cc58444aa4732900d0c6dc06a60",
+        "0c01e10660ce7737ded1b95cf490f135c03e44550d4575656914383287163046",
+        "5558e8c02ab9fb920772f9b5ef7751c5c7118a3017b3666fcf2cd012ebca3c13",
+        "1dd39d766d66b7a558ebf91ea6be1f340add077bc3c3f353ddd37e5e9508c6dc",
+        "7bfc60494fd2a804fcfaedca1c5b01c7889ba612678a76a579dd198ea67d02d0",
+        "d946e86b4a3b90a2703e6135fa84e003e169123da85e20c3089059638aadcd74"
+      ],
+      "model_id": "mistralai/mistral-nemo",
+      "planned_conversations": 6,
+      "provider_names": [
+        "DekaLLM"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 24,
+      "status_counts": {
+        "completed": 6
+      },
+      "tier": "low_cost",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 4,
+      "completed_conversations": 1,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791398575-t8W7U3SMh8PFeyjAbLJo",
+        "gen-1791398597-OzKihDiCs0Za5EuNwWdF",
+        "gen-1791398615-OP8w4fJMjaMCL03W7xmI",
+        "gen-1791398641-1MXYTAgQqvYVpjVe7Flk"
+      ],
+      "ledger_hashes": [
+        "ae2b0844518cbc12e87523b0d5ed5f95f411dae04db56be35d378c8705ad4036"
+      ],
+      "model_id": "nvidia/nemotron-3-super-120b-a12b:free",
+      "planned_conversations": 1,
+      "provider_names": [
+        "Nvidia"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 4,
+      "status_counts": {
+        "completed": 1
+      },
+      "tier": "free",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 4,
+      "completed_conversations": 1,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791398664-eQWxo0b1e2sKWFYHuyvk",
+        "gen-1791398682-ta0lKcJFQ3NPDqdECDnT",
+        "gen-1791398695-zNwIr6JnWjHWH55yk8pI",
+        "gen-1791398751-CHk1wB04bqYRPeOpzpMN"
+      ],
+      "ledger_hashes": [
+        "6aae8c6697f67e4ece441df8ccd7fd59aae8b26feb3e9caa112e790d8d0f832f"
+      ],
+      "model_id": "nvidia/nemotron-3.5-lightning:free",
+      "planned_conversations": 1,
+      "provider_names": [
+        "Nvidia"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 4,
+      "status_counts": {
+        "completed": 1
+      },
+      "tier": "free",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 24,
+      "completed_conversations": 6,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791400375-n3EFOdE2UjFnpBOSpM4W",
+        "gen-1791400377-8SQuP4UMF8D432DydKq4",
+        "gen-1791400378-FWicjbxtFRUOQAVfqEp0",
+        "gen-1791400379-eR6cKDyi0DxJRnFf6Ywz",
+        "gen-1791400344-iRDU6H8eZF3B4j2csqeq",
+        "gen-1791400346-ovEOdqLsRXvn2kMKyl24",
+        "gen-1791400352-iMyVfY7O7ex2vGtmrB5f",
+        "gen-1791400359-RuU7mtBTAACpXmkCc8kD",
+        "gen-1791399912-p7IExNDE1gpglZjbOcMC",
+        "gen-1791399914-cXoF93fvitJjRp58W9LN",
+        "gen-1791399916-bYi5iSNUS7wGistdj8ZO",
+        "gen-1791399917-SDwkd0U83U6pUV2fcj2a",
+        "gen-1791400196-UmKcO47HGoQcwpF3KLSj",
+        "gen-1791400197-th56enUf6DBNdCGHPlBj",
+        "gen-1791400199-302DnQ13GR5Dn3b9XYU7",
+        "gen-1791400201-5al3wG7CHP1ELSp9bVJf",
+        "gen-1791400365-X7BudKQqwD5XBjtRPJhR",
+        "gen-1791400366-q7hLIVOOhu5UXbDGYsAk",
+        "gen-1791400367-Ngxi1KrlAh0shfGk0XA2",
+        "gen-1791400368-oddUY7OHrx7ij4m3Yl2Z",
+        "gen-1791399727-WUGcRviP9i1I4I28KDM6",
+        "gen-1791399728-nm69jj7YOVWvlxzLMtcP",
+        "gen-1791399730-Er6MEHzbuGX2negrKAy8",
+        "gen-1791399731-U6GUo3cqcGl20TIokwJK"
+      ],
+      "ledger_hashes": [
+        "20df163212a2e07c6f1f9fd55a7322e1e74dc8909eb673fd9291a46424ec6d05",
+        "528fa6978e2e765c644193f1325aebfb0035830dc650742636e152d343d8eab2",
+        "f0e64b915070f40e3156a822576a6abe4e6ea7424147f76f6a0c0716b9630f0d",
+        "41ac7e6577103f6eeafdfdc58d9a603d99214cee8b4fcc7d500e4ae5241b657b",
+        "ae735ceabd48a40a470a4de3fc5afbd084995c718b3d8cf521d202c9c4df3bd7",
+        "dd0ce5ac021f3532ecbbc331ae0dd203ce782e0479bc421756889adbeb506049"
+      ],
+      "model_id": "openai/gpt-4.1-nano",
+      "planned_conversations": 6,
+      "provider_names": [
+        "OpenAI"
+      ],
+      "response_cost_usd_recorded": 0.0019019999999999998,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "completed": 6
+      },
+      "tier": "low_cost",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 24,
+      "completed_conversations": 6,
+      "failure_reasons": {},
+      "generation_ids": [
+        "gen-1791399088-pTYwuKYzghcBhFvQ6ILN",
+        "gen-1791399175-IofZMrxFfToz8K24OwKY",
+        "gen-1791399307-0LknWlhokXpCIbKw2pAo",
+        "gen-1791399344-yE9K6NfuMqAemAUVp4DG",
+        "gen-1791399993-FYU0NAiMHCgmNFSRkss1",
+        "gen-1791400035-IZMtHlXKXUpWmALDbNGC",
+        "gen-1791400061-VlvyQXW4M06OKPlnTHwd",
+        "gen-1791400067-VQpxV6Z7KoIjAcebRXVr",
+        "gen-1791399942-wDT5r9tezRAHOoOKf7qV",
+        "gen-1791399955-9tGFi2JUYmAQMx29fkRO",
+        "gen-1791399963-y9Khvr64jMVpQJpNFsZc",
+        "gen-1791399976-FHel9HtfFRiZA2qHpQHU",
+        "gen-1791399489-V7hlTsmlDWqMZTPtXiCQ",
+        "gen-1791399503-Z8u1LusaOKday5HhKCPy",
+        "gen-1791399540-Nqj14ursiZFefh5Bjqa4",
+        "gen-1791399589-zP4JcFTFYCwvwZTnqpfv",
+        "gen-1791398790-PBRq6szlSNUjs2yzLImk",
+        "gen-1791398814-7gJHv7OKMOzPzRb42soA",
+        "gen-1791398833-1gnQ9j7FfMGfhuPlIDTi",
+        "gen-1791398889-DJ4S6MQj2PyL9dNhnjxa",
+        "gen-1791399720-KtyTJHyW9rTQzUEtPEfZ",
+        "gen-1791399787-DRW6s4CcDvNCEPyIXASJ",
+        "gen-1791399806-7YioYQD3v9uTf7WIGP06",
+        "gen-1791399840-vz489YFrsGbWMu598yTg"
+      ],
+      "ledger_hashes": [
+        "f8f4f21a187181476096b12d4eebb4f0d95a77b0e99acc333e02cb2114f2a7d6",
+        "19dbf0fec23432f5d58720da0ac37ddb70eae5bb844d6acdccec40e7c7f9237a",
+        "ff328646521835fc4ed74f79388fa381c706614590cffd99f7e67b01cd2f8389",
+        "1f2f0ca68770d831b604ef406b3d45e5853753c481d752430473176a13024482",
+        "da9dd55d896bf56328163ec1b574fd5172e880a9ed9d39269a0045d8a1d43e0d",
+        "54c16d74ff85edd4c0be58a80f124f50ca870b3ac42cf01851799a0652a900bc"
+      ],
+      "model_id": "openai/gpt-oss-20b",
+      "planned_conversations": 6,
+      "provider_names": [
+        "Darkbloom"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 24,
+      "status_counts": {
+        "completed": 6
+      },
+      "tier": "low_cost",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 5,
+      "completed_conversations": 1,
+      "failure_reasons": {
+        "truncated_response": 1
+      },
+      "generation_ids": [
+        "gen-1791398950-pzItaYqtJc0tuYSJpZ23",
+        "gen-1791398961-yIvpM2iPkZ2q2F92Sa1J",
+        "gen-1791398978-WKF3nF9pyB0vqDpdr1v7",
+        "gen-1791398997-eCjQP00p1R21a3KT7tUD",
+        "gen-1791399402-wWdaAds2Sa0NoTNQOySw"
+      ],
+      "ledger_hashes": [
+        "859b8f20aafd9def5b0f0995d0c04222bcc2c65225d6435c879e886ea7eb2fdc",
+        "fe15dec9f10f4d1e43d46b704b500676ad9188180cbf0998c9750478c6fd719b"
+      ],
+      "model_id": "qwen/qwen3.7-flash",
+      "planned_conversations": 6,
+      "provider_names": [
+        "Alibaba"
+      ],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 5,
+      "status_counts": {
+        "completed": 1,
+        "incomplete": 1,
+        "not_called_after_endpoint_failure": 4
+      },
+      "tier": "low_cost",
+      "truncated_responses": 1
+    },
+    {
+      "accepted_responses": 0,
+      "completed_conversations": 0,
+      "failure_reasons": {},
+      "generation_ids": [],
+      "ledger_hashes": [],
+      "model_id": "qwen/qwen3.8-27b:free",
+      "planned_conversations": 1,
+      "provider_names": [],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "not_called_catalogue_changed": 1
+      },
+      "tier": "free",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 0,
+      "completed_conversations": 0,
+      "failure_reasons": {
+        "http_403": 1
+      },
+      "generation_ids": [],
+      "ledger_hashes": [
+        "56906b3fcd0d9d45aaac0f8446e760f1927b0249ef0e7815501445db9e99a664"
+      ],
+      "model_id": "thinkingmachines/inkling-small:free",
+      "planned_conversations": 1,
+      "provider_names": [],
+      "response_cost_usd_recorded": 0.0,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "incomplete": 1
+      },
+      "tier": "free",
+      "truncated_responses": 0
+    },
+    {
+      "accepted_responses": 12,
+      "completed_conversations": 2,
+      "failure_reasons": {
+        "truncated_response": 1
+      },
+      "generation_ids": [
+        "gen-1791400083-xywi3vIjvKOvLRFmpnIf",
+        "gen-1791400097-0Im9H4R9HDhZBh35ijaX",
+        "gen-1791400118-rzuTsIAX360ftvLPyT8p",
+        "gen-1791400156-6rud4mbdVZ90NKfBjICT",
+        "gen-1791399861-vsCH76lMToWeKDmfbfMJ",
+        "gen-1791399868-mmXw0jk2paSxVcvr3k1f",
+        "gen-1791399887-ZTQVHDeakAvurunS38H0",
+        "gen-1791399898-4DCKpivS2JqPaMKjAYv6",
+        "gen-1791400234-JpKyQY50nNKwVCycr9Ir",
+        "gen-1791400239-SMSStHd1wQ4furaYVhuk",
+        "gen-1791400267-d2w5hKMgAuHfPH2eTCeT",
+        "gen-1791400287-XCAzcMgRgz1BqkbRUhpZ"
+      ],
+      "ledger_hashes": [
+        "a555b1e111c8c0bca89f7914b70a952c17e4e6977374718e7306388b6a05b8a6",
+        "d6562b02184157655a63f7c9d7e3802750f512874fff24f7be22f3b2425335f6",
+        "9b3752172b69db160726fa8afcddcca6781690b6681dbbb89a4c0be027e86267"
+      ],
+      "model_id": "upstage/solar-mini4",
+      "planned_conversations": 6,
+      "provider_names": [
+        "Upstage"
+      ],
+      "response_cost_usd_recorded": 0.0029362499999999996,
+      "response_costs_missing": 0,
+      "status_counts": {
+        "completed": 2,
+        "incomplete": 1,
+        "not_called_after_endpoint_failure": 3
+      },
+      "tier": "low_cost",
+      "truncated_responses": 1
+    }
+  ],
+  "models_with_accepted_responses": 12,
+  "paid_models_with_accepted_responses": 9,
+  "planned_conversations": 66,
+  "planned_models": 16,
+  "response_count_note": "Accepted means stored, not clinically validated; includes partial and truncated outputs.",
+  "safety_ratings_collected": false,
+  "truncated_responses": 4
+}

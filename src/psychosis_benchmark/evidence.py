@@ -181,3 +181,11 @@ def verify_ledger(path: str | Path) -> LedgerVerification:
 
 def ledger_contains_run(path: str | Path, run_id: str) -> bool:
     return any(event.run_id == run_id for event in _read_events(Path(path)))
+
+
+def read_verified_events(path: str | Path) -> list[EvidenceEvent]:
+    """Read only a verified chain; hash validity alone does not prove completion."""
+    report = verify_ledger(path)
+    if not report.valid:
+        raise ValueError(f"invalid evidence ledger: {'; '.join(report.errors)}")
+    return _read_events(Path(path))

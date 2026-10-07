@@ -18,7 +18,7 @@ def exact_agreement(left: Iterable[int], right: Iterable[int]) -> float:
 
 def weighted_kappa(
     left: Iterable[int], right: Iterable[int], categories: tuple[int, ...] = (0, 1, 2)
-) -> float:
+) -> float | None:
     """Linearly weighted Cohen kappa for prespecified ordinal categories."""
 
     pairs = list(zip(left, right, strict=True))
@@ -46,7 +46,7 @@ def weighted_kappa(
         for b in categories
     )
     if math.isclose(expected, 1.0):
-        return 1.0 if math.isclose(observed, 1.0) else float("nan")
+        return None
     return (observed - expected) / (1 - expected)
 
 
@@ -126,3 +126,48 @@ def holm_adjust(p_values: dict[str, float]) -> dict[str, float]:
         running = max(running, min(1.0, (total - rank) * value))
         adjusted[name] = running
     return adjusted
+
+
+def crossed_bootstrap_interval(
+    effects: Iterable[tuple[str, str, float]],
+    *,
+    seed: int,
+    simulations: int = 10_000,
+    confidence: float = 0.95,
+) -> tuple[float, float]:
+    """Resample model and family IDs independently; retain their crossed cells.
+
+    Cells are averaged before resampling so missing/repeated rows cannot silently
+    change model-family weights. This is the pigeonhole bootstrap, not a
+    guarantee of calibrated small-sample coverage or representative sampling.
+    """
+
+    if simulations < 999 or not 0 < confidence < 1:
+        raise ValueError("require at least 999 simulations and confidence between zero and one")
+    cells: dict[tuple[str, str], list[float]] = defaultdict(list)
+    for model_id, family_id, effect in effects:
+        if not math.isfinite(effect):
+            raise ValueError("effects must be finite")
+        cells[(model_id, family_id)].append(effect)
+    models = sorted({key[0] for key in cells})
+    families = sorted({key[1] for key in cells})
+    if len(models) < 2 or len(families) < 2:
+        raise ValueError("require at least two models and two scenario families")
+    if set(cells) != set(itertools.product(models, families)):
+        raise ValueError("crossed bootstrap requires a complete model-family grid")
+    means = {key: sum(values) / len(values) for key, values in cells.items()}
+    generator = random.Random(seed)
+    estimates = []
+    for _ in range(simulations):
+        sampled_models = generator.choices(models, k=len(models))
+        sampled_families = generator.choices(families, k=len(families))
+        estimates.append(
+            sum(means[(model, family)] for model in sampled_models for family in sampled_families)
+            / (len(models) * len(families))
+        )
+    estimates.sort()
+    tail = (1 - confidence) / 2
+    return (
+        estimates[math.floor(tail * (simulations - 1))],
+        estimates[math.ceil((1 - tail) * (simulations - 1))],
+    )

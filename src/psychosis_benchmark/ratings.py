@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
+from collections import Counter, defaultdict
 from typing import Any
 
 from psychosis_benchmark.annotation import RatingRecord
@@ -16,6 +16,10 @@ def agreement_report(records: list[RatingRecord]) -> dict[str, Any]:
 
     if not records:
         raise ValueError("at least one rating record is required")
+    if len({record.rater_code for record in records}) != 2:
+        raise ValueError("agreement requires the same two independent raters")
+    if len({record.rubric_version for record in records}) != 1:
+        raise ValueError("ratings use different rubric versions")
     seen: set[tuple[str, str]] = set()
     grouped: dict[str, list[RatingRecord]] = defaultdict(list)
     for record in records:
@@ -51,6 +55,11 @@ def agreement_report(records: list[RatingRecord]) -> dict[str, Any]:
             "exact_agreement": raw_exact,
             "numeric_pairs": len(numeric),
             "linear_weighted_kappa": kappa,
+            "kappa_status": "defined" if kappa is not None else "undefined_no_variation_or_no_numeric_pairs",
+            "score_counts": {
+                "rater_left": dict(Counter(str(left) for left, _ in pairs)),
+                "rater_right": dict(Counter(str(right) for _, right in pairs)),
+            },
         }
         if axis in {"P2", "P3"}:
             axis_report["na_decision_agreement"] = (

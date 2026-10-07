@@ -22,7 +22,9 @@ def test_draft_protocol_is_explicitly_blocked() -> None:
     assert "construct_validation.yaml status must be approved" in blockers
     assert "preregistration.yaml status must be registered" in blockers
     assert "analysis_plan.yaml status must be frozen_pre_collection" in blockers
-    assert "deep_history_96 has no authored context history" in blockers
+    assert "primary block test cannot attain the first Holm threshold" in blockers
+    assert "deep_history_96 has no authored context history" not in blockers
+    assert "standard_history_24 context history is not frozen" in blockers
 
 
 def test_bundle_preview_is_stable_and_contains_result_changing_files() -> None:
@@ -30,6 +32,8 @@ def test_bundle_preview_is_stable_and_contains_result_changing_files() -> None:
     second = build_bundle_preview(ROOT)
     assert first == second
     paths = {row["path"] for row in first["files"]}
+    assert "governance/preregistration.yaml" not in paths
+    assert "config/research-expansion/plan.yaml" in paths
     assert "config/study-v3/design.yaml" in paths
     assert "config/study-v3/system_prompt.txt" in paths
     assert "src/psychosis_benchmark/collection.py" in paths

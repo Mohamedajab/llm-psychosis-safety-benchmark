@@ -14,6 +14,12 @@ through Nemotron 3 Super.
 The health-specialised endpoint is exploratory because domain tuning is a confound as well as an
 object of interest. It cannot silently replace a general-purpose model.
 
+The original frame is retained for pilot reproducibility. Five additional cheap paid candidates in
+`config/study-v3/paid_expansion.yaml` bring the explicit overlay to sixteen candidates, ten paid.
+The expanded draft proposes eight selected endpoints and at least five paid anchors.
+Its rule is a candidate amendment requiring provider preflight and
+registration; no candidate is automatically eligible for confirmation.
+
 ## Confirmation rule
 
 The confirmatory panel contains six endpoints if six pass the gate:
@@ -25,6 +31,10 @@ The confirmatory panel contains six endpoints if six pass the gate:
 5. break remaining ties by lower cost ceiling, then lexicographic slug.
 
 Behavioural screening scores are prohibited as selection inputs.
+
+The 7 October pilots include asymmetric technical coverage: free endpoints initially received one
+four-turn script, while paid batches attempted six. Availability reports retain these denominators;
+they do not justify free-versus-paid behavioural comparisons or claim that screening is complete.
 
 ## Prices and free endpoints
 
