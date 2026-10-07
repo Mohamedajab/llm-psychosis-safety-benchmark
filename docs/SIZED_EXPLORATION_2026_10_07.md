@@ -107,8 +107,11 @@ checked before requests; remove it before resuming. Resume with the same output 
 Do not put keys in files committed to Git or in command-line arguments. A process-owner
 lock prevents two collectors from using the same batch simultaneously.
 
-The dashboard reads `progress.json` every 15 seconds and verifies a selected dialogue's
-hash chain. Raw responses, budget journal, and full transcripts remain Git-ignored.
+The dashboard reads progress and independent process telemetry every five seconds and verifies a
+selected dialogue's hash chain. Optional [local controls](LOCAL_COLLECTION_CONTROLS.md) resume the
+same frozen batch and remove only the `STOP` operator marker. Raw responses, budget journal,
+controller logs, and full transcripts remain Git-ignored. An old `collecting` label alone does not
+establish that the process is alive.
 For a non-mutating audit of hash chains and every reconstructed request transcript:
 
 ```text

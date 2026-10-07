@@ -46,8 +46,26 @@ python -m streamlit run streamlit_app.py
 
 Open [http://127.0.0.1:8501](http://127.0.0.1:8501). The read-only viewer shows recorded evidence,
 prices, design controls, draft scenarios, and publication blockers. Local dialogues are opt-in;
-API keys and blinding maps are never displayed. The viewer makes no model calls.
+API keys and blinding maps are never displayed. The default viewer makes no model calls.
 In VS Code, **Terminal → Run Task → Research: Streamlit viewer** starts the same local app.
+
+For local collection controls, launch:
+
+```text
+python scripts/serve_research_lab.py --enable-collection-controls
+```
+
+On **Evidence**, use **Resume collection** to continue the saved sized exploration, or **Pause
+collection** to checkpoint before the next call. Supply a key in the password field if the server
+session has none. Keys are held in memory, not written to files. The launcher binds to loopback;
+controls are disabled unless explicitly enabled on a loopback-bound server. Do not expose this
+control-enabled app through a public tunnel or hosted deployment.
+
+Status checks the collector's OS lock and process, not just an old `collecting` label. A separate
+heartbeat and per-model turn, attempt, retry reason, last response, and budget details refresh every
+five seconds. Resume retains recorded inputs and the persisted $5 cap, prevents duplicate launches,
+and never regenerates accepted replies or terminal failed outputs. It is disabled after completion.
+See [local controls](docs/LOCAL_COLLECTION_CONTROLS.md) for recovery and credential handling.
 
 ## Expanded research draft
 
@@ -145,7 +163,7 @@ src/psychosis_benchmark/
   statistics.py            Auditable agreement and sensitivity-analysis primitives
   analysis.py              Matched estimates, missingness bounds, trajectories
   expansion.py             Explicit scenario and long-horizon draft overlays
-streamlit_app.py            Read-only local research viewer
+streamlit_app.py            Default read-only viewer; optional local collection controls
 scripts/benchmark.py       Command-line entry point
 tests/                     Offline validation tests
 ```

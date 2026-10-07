@@ -103,6 +103,7 @@ def checkpoint_conversation(
     interval_seconds: float = 3,
     sleep: Callable[[float], None] = time.sleep,
     on_response: Callable[[], None] = lambda: None,
+    on_activity: Callable[[dict], None] = lambda _: None,
     stop_requested: Callable[[], bool] = lambda: False,
 ) -> str:
     if row.stage == "confirmatory":
@@ -257,6 +258,14 @@ def checkpoint_conversation(
                 },
             )
             last_attempt[turn] = attempt
+            on_activity(
+                {
+                    "state": "requesting",
+                    "turn": turn,
+                    "attempt": attempt,
+                    "request_started_at_utc": datetime.now(UTC).isoformat(),
+                }
+            )
             try:
                 result = client.complete_once(
                     model_id=row.model_id,
@@ -292,6 +301,15 @@ def checkpoint_conversation(
                     )
                     return "failed"
                 delay = max(interval_seconds, min(60, 5 * 2**session_attempt), error.retry_after_seconds or 0)
+                on_activity(
+                    {
+                        "state": "retry_wait",
+                        "turn": turn,
+                        "attempt": attempt,
+                        "reason": error.code,
+                        "retry_delay_seconds": delay,
+                    }
+                )
                 if session_attempt + 1 == attempts_per_session or delay > 60:
                     append_event(
                         ledger,

@@ -21,9 +21,10 @@ from psychosis_benchmark.batch import BatchPaused, SpendingBudget, checkpoint_co
 from psychosis_benchmark.catalogue import verify_live_catalogue  # noqa: E402
 from psychosis_benchmark.contexts import ContextHistory, load_context_histories  # noqa: E402
 from psychosis_benchmark.design import build_manifest  # noqa: E402
-from psychosis_benchmark.evidence import payload_hash  # noqa: E402
+from psychosis_benchmark.evidence import payload_hash, read_verified_events  # noqa: E402
 from psychosis_benchmark.expansion import load_expanded_study  # noqa: E402
 from psychosis_benchmark.export import export_ledger  # noqa: E402
+from psychosis_benchmark.live_control import BatchLock, RuntimeMonitor, atomic_json  # noqa: E402
 from psychosis_benchmark.provider import OpenRouterClient  # noqa: E402
 from psychosis_benchmark.schema import ManifestRow, StudyBundle  # noqa: E402
 
@@ -69,12 +70,6 @@ def prepare_inputs():
     }
 
 
-def atomic_json(path, value):
-    temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
-    os.replace(temporary, path)
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, required=True)
@@ -109,23 +104,29 @@ def main():
     if not api_key:
         parser.error("provide key through stdin or environment, never a command-line argument")
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    # OS advisory lock releases on process exit/crash, unlike a stale PID file.
-    lock_handle = (args.output_dir / "owner.lock").open("a+b")
-    lock_handle.seek(0)
-    lock_handle.write(b"0")
-    lock_handle.flush()
-    lock_handle.seek(0)
-    try:
-        if os.name == "nt":
-            import msvcrt
-
-            msvcrt.locking(lock_handle.fileno(), msvcrt.LK_NBLCK, 1)
-        else:
-            import fcntl
-
-            fcntl.flock(lock_handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-    except OSError:
+    owner = BatchLock(args.output_dir / "owner.lock")
+    if not owner.acquire():
         parser.error("another process owns this batch")
+    runtime = None
+    try:
+        runtime = RuntimeMonitor(args.output_dir, inputs["plan"]["models"])
+        return collect(args, inputs, preview, api_key, runtime)
+    except Exception as error:
+        # Exception text/tracebacks can contain secrets or generated content.
+        if runtime:
+            runtime.set_state("failed", error_type=type(error).__name__, error_operation="collection")
+        print(json.dumps({"status": "failed", "error_type": type(error).__name__}), flush=True)
+        return 1
+    finally:
+        try:
+            if runtime:
+                runtime.close()
+        finally:
+            owner.close()
+
+
+def collect(args, inputs, preview, api_key, runtime):
+    input_hash = preview["input_hash"]
     if not args.resume:
         atomic_json(args.output_dir / "inputs.json", inputs)
         (args.output_dir / "input_hash.txt").write_text(input_hash + "\n", encoding="utf-8")
@@ -153,6 +154,7 @@ def main():
     progress_lock = threading.Lock()
     stop = threading.Event()
     summary = {}
+    last_response_at = None
     for track, row in rows:
         ledger = args.output_dir / "ledgers" / f"{row.run_id}.jsonl"
         if ledger.exists():
@@ -165,6 +167,13 @@ def main():
             )
             state["track"] = track
             summary[row.run_id] = state
+            recorded_events = read_verified_events(ledger)
+            state["terminal"] = recorded_events[-1].event_type in {"run_completed", "run_failed"}
+            response_times = [
+                event.occurred_at_utc for event in recorded_events if event.event_type == "response_received"
+            ]
+            if response_times:
+                last_response_at = max(last_response_at or "", max(response_times))
         else:
             summary[row.run_id] = {
                 "run_id": row.run_id,
@@ -174,7 +183,11 @@ def main():
                 "accepted_responses": 0,
                 "planned_responses": row.planned_turns,
             }
-    started_at = datetime.now(UTC).isoformat()
+    previous_progress = args.output_dir / "progress.json"
+    previous = json.loads(previous_progress.read_text(encoding="utf-8")) if previous_progress.exists() else {}
+    resumed_at = datetime.now(UTC).isoformat()
+    started_at = previous.get("started_at_utc", resumed_at)
+    worker_errors = {}
 
     def write_progress(status="collecting"):
         with progress_lock:
@@ -193,6 +206,8 @@ def main():
                 **preview,
                 "status": status,
                 "started_at_utc": started_at,
+                "last_resumed_at_utc": resumed_at if args.resume else None,
+                "last_response_at_utc": last_response_at,
                 "updated_at_utc": datetime.now(UTC).isoformat(),
                 "completed_conversations": sum(item["status"] == "completed" for item in summary.values()),
                 "stored_responses": sum(item["accepted_responses"] for item in summary.values()),
@@ -205,7 +220,8 @@ def main():
             atomic_json(args.output_dir / "progress.json", report)
             return report
 
-    def refresh(row, track):
+    def refresh(row, track, response_received=False):
+        nonlocal last_response_at
         _, state = export_ledger(
             args.output_dir / "ledgers" / f"{row.run_id}.jsonl",
             study=studies[track],
@@ -214,11 +230,25 @@ def main():
             system_prompt=inputs["system_prompt"],
         )
         with progress_lock:
+            state["terminal"] = read_verified_events(args.output_dir / "ledgers" / f"{row.run_id}.jsonl")[
+                -1
+            ].event_type in {"run_completed", "run_failed"}
             summary[row.run_id] = {**state, "track": track}
+            if response_received:
+                last_response_at = datetime.now(UTC).isoformat()
+        runtime.worker(
+            row.model_id,
+            run_id=row.run_id,
+            accepted_responses=state["accepted_responses"],
+            planned_responses=row.planned_turns,
+        )
+        if response_received:
+            runtime.worker(row.model_id, last_response_at_utc=last_response_at, state="collecting")
         write_progress()
 
     def run_model(model_id):
         if model_id in blocked:
+            runtime.worker(model_id, state="catalogue_blocked", reason="catalogue_drift")
             with progress_lock:
                 for item in summary.values():
                     if item["model_id"] == model_id and item["status"] == "not_started":
@@ -232,7 +262,12 @@ def main():
         )
         for track, row in ordered:
             if stop.is_set() or (args.output_dir / "STOP").exists():
+                runtime.worker(model_id, state="paused", reason="operator_checkpoint")
                 return
+            # Never reopen or replace an accepted terminal conversation.
+            if summary[row.run_id].get("terminal"):
+                continue
+            runtime.worker(model_id, state="collecting", run_id=row.run_id, track=track)
             try:
                 status = checkpoint_conversation(
                     study=studies[track],
@@ -244,11 +279,13 @@ def main():
                     budget=budget,
                     attempts_per_session=inputs["plan"]["generation"]["max_attempts_per_turn_per_session"],
                     interval_seconds=inputs["plan"]["generation"]["minimum_request_interval_seconds"],
-                    on_response=lambda r=row, t=track: refresh(r, t),
+                    on_response=lambda r=row, t=track: refresh(r, t, response_received=True),
+                    on_activity=lambda fields, m=model_id: runtime.worker(m, **fields),
                     stop_requested=lambda: stop.is_set() or (args.output_dir / "STOP").exists(),
                 )
                 refresh(row, track)
                 print(json.dumps({"model": model_id, "run_id": row.run_id, "status": status}), flush=True)
+                runtime.worker(model_id, state=status, reason=summary[row.run_id].get("failure_reason"))
                 if status == "failed" and summary[row.run_id].get("failure_reason") in {
                     "http_401",
                     "http_402",
@@ -262,29 +299,51 @@ def main():
                 if str(error) in {"local_spending_cap", "cost_missing_or_exceeds_reservation"}:
                     stop.set()
                 print(json.dumps({"model": model_id, "status": "paused", "reason": str(error)}), flush=True)
+                runtime.worker(model_id, state="paused", reason=str(error))
                 return
-            except Exception:
+            except Exception as error:
                 # Do not log exception text: transport internals may include credentials.
                 stop.set()
+                worker_errors[model_id] = type(error).__name__
+                runtime.set_state("pausing", error_type=type(error).__name__, error_operation="worker")
+                runtime.worker(model_id, state="paused_error", error_type=type(error).__name__)
                 print(
-                    json.dumps({"model": model_id, "status": "paused", "reason": "unexpected_error"}),
+                    json.dumps(
+                        {
+                            "model": model_id,
+                            "status": "paused",
+                            "reason": "unexpected_error",
+                            "error_type": type(error).__name__,
+                        }
+                    ),
                     flush=True,
                 )
-                raise RuntimeError("batch paused; inspect evidence without exposing credentials") from None
+                return
+        runtime.worker(model_id, state="finished")
 
+    runtime.set_state("running")
     write_progress()
     with ThreadPoolExecutor(max_workers=len(models)) as pool:
         list(pool.map(run_model, models))
-    report = write_progress(
-        "completed"
-        if all(item["status"] == "completed" for item in summary.values())
-        else "incomplete_checkpointed"
+    status = (
+        "paused_error"
+        if worker_errors
+        else (
+            "completed"
+            if all(item["status"] == "completed" for item in summary.values())
+            else "finished_with_failures"
+            if all(item.get("terminal") for item in summary.values())
+            else "incomplete_checkpointed"
+        )
+    )
+    report = write_progress(status)
+    runtime.set_state(
+        report["status"], finished_at_utc=datetime.now(UTC).isoformat(), worker_errors=worker_errors
     )
     print(
         json.dumps({key: value for key, value in report.items() if key not in {"runs", "models"}}), flush=True
     )
-    lock_handle.close()
-    return 0 if report["status"] == "completed" else 2
+    return 0 if report["status"] == "completed" else 1 if worker_errors else 2
 
 
 if __name__ == "__main__":

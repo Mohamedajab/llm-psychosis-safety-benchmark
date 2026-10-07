@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import http.client
 import json
 from pathlib import Path
 
@@ -9,7 +10,7 @@ from psychosis_benchmark.collection import CollectionError, collect_conversation
 from psychosis_benchmark.contexts import load_context_histories
 from psychosis_benchmark.design import build_manifest, load_study
 from psychosis_benchmark.evidence import verify_ledger
-from psychosis_benchmark.provider import HttpResponse, OpenRouterClient, ProviderCallError
+from psychosis_benchmark.provider import HttpResponse, OpenRouterClient, ProviderCallError, UrllibTransport
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config" / "study-v3"
@@ -120,3 +121,36 @@ def test_preview_has_hash_but_no_prompt_text() -> None:
     )
     assert len(preview["first_request_hash"]) == 64
     assert "messages" not in preview
+
+
+@pytest.mark.parametrize(
+    "decoded",
+    [
+        [],
+        {"choices": "wrong"},
+        {"model": "example/model", "choices": ["wrong"]},
+        {"model": "example/model", "choices": [{"message": "wrong"}]},
+    ],
+)
+def test_malformed_provider_shape_is_a_recordable_failure(decoded):
+    study = load_study(CONFIG)
+    transport = FakeTransport([HttpResponse(200, json.dumps(decoded).encode(), {})])
+    with pytest.raises(ProviderCallError):
+        OpenRouterClient("test", transport=transport).complete_once(
+            model_id="example/model",
+            messages=[],
+            generation=study.design.generation,
+            seed=None,
+            provider_pin=None,
+        )
+
+
+def test_incomplete_http_body_becomes_retryable_transport_failure(monkeypatch):
+    def broken(*args, **kwargs):
+        raise http.client.IncompleteRead(b"private network bytes")
+
+    monkeypatch.setattr("urllib.request.urlopen", broken)
+    with pytest.raises(ProviderCallError, match="transport_error") as error:
+        UrllibTransport().send("https://example.test", headers={}, body=b"{}", timeout=1)
+    assert error.value.retryable
+    assert "private" not in str(error.value)

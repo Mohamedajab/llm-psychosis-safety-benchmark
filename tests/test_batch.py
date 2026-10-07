@@ -217,3 +217,58 @@ def test_non_mutating_audit_checks_partial_and_complete_evidence(tmp_path):
     assert complete["stored_responses"] == 4 and complete["completed_conversations"] == 1
     assert complete["recorded_response_cost_usd"] == pytest.approx(0.00004)
     assert complete["invalid_finish_responses"] == 0
+
+
+def test_worker_exception_finishes_with_error_state_and_no_secret_traceback(tmp_path, monkeypatch, capsys):
+    import importlib.util
+    import io
+    from types import SimpleNamespace
+
+    from psychosis_benchmark.evidence import payload_hash
+    from psychosis_benchmark.live_control import RuntimeMonitor
+
+    spec = importlib.util.spec_from_file_location("sized_worker", ROOT / "scripts/run_sized_exploration.py")
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    args = fixture_args(tmp_path)
+    directory = tmp_path / "batch"
+    directory.mkdir()
+    row = args["row"]
+    inputs = {
+        "plan": {
+            "models": [row.model_id],
+            "generation": {"max_attempts_per_turn_per_session": 1, "minimum_request_interval_seconds": 0},
+        },
+        "studies": {"core": args["study"].model_dump(mode="json")},
+        "histories": {key: value.model_dump(mode="json") for key, value in args["histories"].items()},
+        "system_prompt": args["system_prompt"],
+        "rows": [{"track": "core", "row": row.model_dump(mode="json")}],
+    }
+
+    class BrokenClient(OpenRouterClient):
+        def complete_once(self, **kwargs):
+            raise ValueError("private-error-with-test-credential")
+
+    monkeypatch.setattr(runner, "OpenRouterClient", BrokenClient)
+    monkeypatch.setattr(runner, "verify_live_catalogue", lambda *args: [])
+    monkeypatch.setattr(runner.urllib.request, "urlopen", lambda *args, **kwargs: io.BytesIO(b'{"data":[]}'))
+    runtime = RuntimeMonitor(directory, [row.model_id])
+    try:
+        assert (
+            runner.collect(
+                SimpleNamespace(output_dir=directory, resume=False, budget_usd=1),
+                inputs,
+                {"input_hash": payload_hash(inputs)},
+                "test-key",
+                runtime,
+            )
+            == 1
+        )
+    finally:
+        runtime.close()
+    progress = json.loads((directory / "progress.json").read_text())
+    assert progress["status"] == "paused_error"
+    assert json.loads((directory / "runtime.json").read_text())["status"] == "paused_error"
+    assert verify_ledger(directory / "ledgers" / f"{row.run_id}.jsonl").valid
+    assert "private-error-with-test-credential" not in capsys.readouterr().out
+    assert "private-error-with-test-credential" not in (directory / "runtime.json").read_text()

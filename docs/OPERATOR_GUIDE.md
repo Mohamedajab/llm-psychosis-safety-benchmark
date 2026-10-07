@@ -1,7 +1,9 @@
 # Operator guide
 
 The default workflow is offline. Collection commands require `--live` and an API key. The Streamlit
-viewer is read-only and never invokes a model.
+viewer defaults to read-only. Explicit loopback-only
+[local controls](LOCAL_COLLECTION_CONTROLS.md) can launch the saved exploratory collector after a
+Resume button click. They do not collect confirmatory data or change the frozen inputs.
 
 ## 1. Validate the design
 

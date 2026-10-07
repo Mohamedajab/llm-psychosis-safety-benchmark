@@ -10,6 +10,14 @@
       "problemMatcher": []
     },
     {
+      "label": "Research: local collection controls",
+      "type": "process",
+      "command": "python",
+      "args": ["scripts/serve_research_lab.py", "--enable-collection-controls"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
       "label": "Research: offline tests",
       "type": "process",
       "command": "python",

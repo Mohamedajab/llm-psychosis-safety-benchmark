@@ -1,9 +1,11 @@
-"""Read-only research viewer. No API calls, scoring automation, or secret entry fields."""
+"""Evidence viewer; explicitly enabled loopback controls can resume the saved exploration."""
 
 from __future__ import annotations
 
 import json
+import os
 import sys
+from collections import Counter
 from pathlib import Path
 
 import pandas as pd
@@ -16,6 +18,13 @@ from psychosis_benchmark.collection import find_script  # noqa: E402
 from psychosis_benchmark.design import load_study  # noqa: E402
 from psychosis_benchmark.evidence import read_verified_events  # noqa: E402
 from psychosis_benchmark.expansion import load_expanded_study  # noqa: E402
+from psychosis_benchmark.live_control import (  # noqa: E402
+    BATCH_NAME,
+    age_seconds,
+    collection_status,
+    request_pause,
+    resume_collection,
+)
 from psychosis_benchmark.protocol import freeze_blockers  # noqa: E402
 from psychosis_benchmark.schema import StudyBundle  # noqa: E402
 
@@ -33,7 +42,14 @@ st.warning(
 )
 st.sidebar.title("Research workspace")
 st.sidebar.markdown("[GitHub repository](https://github.com/Mohamedajab/llm-psychosis-safety-benchmark)")
-st.sidebar.caption("Read-only local viewer. It never calls a model or accepts an API key.")
+controls_enabled = os.environ.get("BENCHMARK_ENABLE_COLLECTION_CONTROLS") == "1" and st.get_option(
+    "server.address"
+) in {"127.0.0.1", "localhost", "::1"}
+st.sidebar.caption(
+    "Local collection controls enabled. Resume can make paid API requests within the saved cap."
+    if controls_enabled
+    else "Read-only viewer. Collection controls are disabled."
+)
 if st.sidebar.button("Refresh recorded evidence"):
     st.rerun()
 
@@ -43,25 +59,115 @@ long = read_report("live_longitudinal_2026-10-07.json")
 tabs = st.tabs(["Evidence", "Model panel", "Design explorer", "Conversations", "Publication gates"])
 
 
-@st.fragment(run_every="15s")
+@st.fragment(run_every="5s")
 def collection_progress():
-    path = ROOT / "data/raw/live-sized-exploration-2026-10-07/progress.json"
+    directory = ROOT / "data/raw" / BATCH_NAME
+    status = collection_status(directory)
+    progress = status["progress"]
     st.subheader("Sized exploration · target 5,184 new responses")
     st.caption("Six models: five inexpensive paid and one free. Ten families, plus a narrow 24-turn track.")
-    if path.exists():
-        progress = json.loads(path.read_text(encoding="utf-8"))
+    if progress:
         metrics = st.columns(3)
         metrics[0].metric("Stored / target", f"{progress['stored_responses']:,} / 5,184")
         metrics[1].metric("Completed conversations", f"{progress['completed_conversations']} / 396")
         metrics[2].metric("Recorded API cost / cap", f"${progress['budget']['recorded_cost_usd']:.3f} / $5")
         st.progress(min(progress["stored_responses"] / 5184, 1.0))
-        st.caption(f"State: {progress['status']} · Updated UTC: {progress['updated_at_utc']}")
-        st.dataframe(pd.DataFrame(progress["models"]), hide_index=True, width="stretch")
-        st.caption("Stored does not mean complete or safe. No human labels. Refreshes every 15 seconds.")
+        state_label = status["state"].replace("_", " ").title()
+        if status["active"]:
+            st.success(f"Collector: {state_label}")
+        else:
+            st.warning(f"Collector: {state_label}. No new API calls are running.")
+        heartbeat = status["heartbeat_age_seconds"]
+        heartbeat_label = f"{round(heartbeat)} seconds ago" if heartbeat is not None else "not recorded"
+        st.caption(
+            f"Process PID: {status['runtime'].get('pid', 'not recorded')} · "
+            f"Process alive: {status['process_alive']} · "
+            f"Owner lock held: {status['owner_lock_held']} · "
+            f"Heartbeat: {heartbeat_label}"
+        )
+        if status["active"] and not status["heartbeat_fresh"]:
+            st.warning(
+                "The process owns the batch but its heartbeat is stale or missing. Check worker activity."
+            )
+        last_response_age = age_seconds(progress.get("last_response_at_utc"))
+        st.caption(
+            f"Last accepted response UTC: {progress.get('last_response_at_utc', 'not recorded')} · "
+            f"Progress snapshot UTC: {progress['updated_at_utc']}"
+        )
+        if last_response_age is not None and last_response_age > 180 and status["active"]:
+            st.info(
+                "No accepted response in over three minutes; workers may be waiting or retrying. "
+                "See details below."
+            )
+        workers = status["runtime"].get("workers", {})
+        table = [
+            {
+                **row,
+                **{
+                    key: workers.get(row["model_id"], {}).get(key)
+                    for key in (
+                        "state",
+                        "turn",
+                        "attempt",
+                        "reason",
+                        "error_type",
+                        "request_started_at_utc",
+                        "last_response_at_utc",
+                    )
+                },
+            }
+            for row in progress["models"]
+        ]
+        st.dataframe(pd.DataFrame(table), hide_index=True, width="stretch")
+        with st.expander("Failures, budget reservations and process details"):
+            reasons = Counter(row["failure_reason"] for row in progress["runs"] if row.get("failure_reason"))
+            st.write(dict(reasons) or "No recorded failure reasons in this snapshot.")
+            st.json(progress["budget"])
+            st.json(status["runtime"])
+        st.caption("Stored does not mean complete or safe. No human labels. Refreshes every five seconds.")
         if progress["catalogue_errors"]:
             st.warning("Catalogue drift prevents some calls: " + "; ".join(progress["catalogue_errors"]))
     else:
         st.info("The reduced plan is prepared; live collection has not started on this checkout.")
+    if controls_enabled and progress:
+        st.subheader("Local collection controls")
+        st.caption(
+            "Resume continues the frozen 5,184-response plan with its original $5 cap. "
+            "Completed replies and terminal failures are not regenerated. "
+            "The key stays in server memory, not files."
+        )
+        server_key = os.environ.get("OPENROUTER_API_KEY", "")
+        if server_key:
+            st.caption("An API key is available in this local server session; it is not displayed.")
+        else:
+            st.caption(
+                "Enter a key to resume. It is cleared on a server restart and never saved to the repository."
+            )
+        with st.expander("Provide or replace the session API key", expanded=not bool(server_key)):
+            entered_key = st.text_input("OpenRouter API key", type="password", key="collection_api_key")
+        api_key = entered_key or server_key
+        resume, pause = st.columns(2)
+        finished = status["state"] in {"completed", "finished_with_failures"}
+        if resume.button("Resume collection", disabled=status["active"] or finished or not bool(api_key)):
+            try:
+                pid = resume_collection(ROOT, api_key)
+                st.success(f"Collector started (PID {pid}). Status will refresh shortly.")
+            except Exception as error:
+                st.error(
+                    f"Resume was not started ({type(error).__name__}). "
+                    "Check the saved batch and process details."
+                )
+        if pause.button("Pause collection", disabled=not status["active"]):
+            request_pause(ROOT)
+            st.info(
+                "Pause requested. In-flight requests may finish; "
+                "the collector will checkpoint before the next call."
+            )
+    elif not controls_enabled:
+        st.caption(
+            "For local Resume/Pause buttons, launch "
+            "scripts/serve_research_lab.py --enable-collection-controls."
+        )
 
 
 with tabs[0]:

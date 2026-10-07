@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import http.client
 import json
 import math
 import time
@@ -58,7 +59,7 @@ class UrllibTransport:
                 body=error.read(),
                 headers=dict(error.headers.items()) if error.headers else {},
             )
-        except (urllib.error.URLError, TimeoutError, OSError) as error:
+        except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException) as error:
             raise ProviderCallError("transport_error", None, retryable=True) from error
 
 
@@ -208,13 +209,17 @@ class OpenRouterClient:
             decoded = json.loads(response.body)
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
             raise ProviderCallError("invalid_json", response.status_code, retryable=False) from error
+        if not isinstance(decoded, dict):
+            raise ProviderCallError("invalid_response_shape", response.status_code, retryable=False)
         choices = decoded.get("choices") or []
-        if decoded.get("error") or len(choices) != 1:
+        if decoded.get("error") or not isinstance(choices, list) or len(choices) != 1:
             raise ProviderCallError("invalid_choice_count", response.status_code, retryable=False)
         resolved_model = decoded.get("model")
         if resolved_model != model_id:
             raise ProviderCallError("resolved_model_mismatch", response.status_code, retryable=False)
         choice = choices[0]
+        if not isinstance(choice, dict) or not isinstance(choice.get("message"), dict):
+            raise ProviderCallError("invalid_response_shape", response.status_code, retryable=False)
         text = (choice.get("message") or {}).get("content")
         if not isinstance(text, str) or not text.strip():
             raise ProviderCallError("empty_response", response.status_code, retryable=False)
