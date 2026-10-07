@@ -179,8 +179,9 @@ ceiling from declared token budgets and catalogue prices; it is not a bill forec
    and two independent human raters.
 4. **Robustness** tests deeper context, prompt re-anchoring, model drift, and a small manually
    captured chat-interface subset. These analyses are secondary.
-5. **Paper drafting** begins only after the readiness gate passes. A manuscript is deliberately
-   absent at present.
+5. **Paper drafting** currently covers introduction, related work, implemented methods, and
+   explicitly planned annotation and analysis. Empirical results and interpretation still require
+   audited evidence, validated measurement, and completed ratings.
 
 The current configuration is still blocked. In particular, the analysis plan is a draft, the
 construct review and rater calibration have not happened, and no preregistration exists. Those
@@ -202,8 +203,17 @@ records are safeguards, not boxes that software can legitimately mark complete.
 **Original study:** 2025–2026  
 **V3 successor started:** 2026-09-30
 
-See [`CITATION.cff`](CITATION.cff) for software citation metadata. No paper citation is supplied
-because no V3 paper has been written.
+See [`CITATION.cff`](CITATION.cff) for software citation metadata. No completed-paper citation is
+supplied; the partial working manuscript is not a published study.
+
+## Working manuscript
+
+The [standalone LaTeX draft](paper/manuscript.tex) contains a provisional methods-only abstract,
+introduction, related work, methods, and limitations. It reports no behavioural results or model
+rankings. [Research positioning and remaining requirements](paper/RESEARCH_POSITION.md) compare
+the design with the closest benchmarks and explain why the contribution is a replication and
+extension, not the first multi-turn psychosis evaluation. The native PDF compiler is currently
+unavailable; source checks do not establish that the rendered layout is correct.
 
 ## Operational documentation
 

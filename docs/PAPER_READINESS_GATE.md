@@ -1,6 +1,13 @@
 # Paper readiness gate
 
-Study V3 is not ready for a paper. Results and discussion wait until these gates pass.
+Study V3 is not ready for a completed empirical manuscript. A
+[partial working draft](../paper/manuscript.tex) describes current methods and outstanding work,
+without results or an empirical discussion.
+
+The checklist below describes the prospective confirmatory study. The running sized collection
+is exploratory; requirements that precede collection cannot be met retrospectively. An
+exploratory paper must label that distinction and still obtain appropriate ethics determination,
+independent construct review, calibrated annotation, and a defensible achieved-data analysis.
 
 ## Protocol
 
@@ -46,5 +53,9 @@ Study V3 is not ready for a paper. Results and discussion wait until these gates
 - [ ] Tables and figures reproduce from a clean clone
 - [ ] Limitations cover stimuli, interface validity, drift, and raters
 
-Methods prose can begin after the first two gates. Results and discussion begin only after the last
-two. The title and abstract are written last. Fabricated result placeholders are prohibited.
+Introduction, related work, and implemented-methods prose may be drafted now, with planned work
+and unmet requirements identified. The working title and methods-only abstract are provisional.
+Results and interpretation require audited collection, validated measurement, completed ratings,
+and analysis checks. Confirmatory claims additionally require the prospective safeguards above.
+Fabricated results, findings inferred from technical completion, and retrospective preregistration
+claims are prohibited.

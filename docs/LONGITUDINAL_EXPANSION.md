@@ -52,4 +52,6 @@ not dialogue or credentials.
 
 Before a main study: review the scenarios and their pairing, validate the rubric and long-track
 constructs, assess clustering and power, budget human annotation, pin providers, obtain an ethics
-determination, calibrate raters, and register the final design. No paper has been drafted.
+determination, calibrate raters, and register the final design. A subsequent
+[introduction and methods draft](../paper/manuscript.tex) documents the exploratory work;
+it contains no behavioural findings and does not satisfy those readiness requirements.

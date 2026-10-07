@@ -288,4 +288,7 @@ with tabs[4]:
     st.markdown(
         "[Research-methods audit](https://github.com/Mohamedajab/llm-psychosis-safety-benchmark/blob/main/docs/RESEARCH_METHODS_AUDIT_2026_10_07.md)"
     )
-    st.caption("No manuscript has been drafted. The original MSc repository remains unchanged.")
+    st.caption(
+        "An introduction and methods draft exists; no behavioural results or completed paper. "
+        "The original MSc repository remains unchanged."
+    )
