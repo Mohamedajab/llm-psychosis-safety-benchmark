@@ -18,6 +18,7 @@ EventType = Literal[
     "request_failed",
     "run_completed",
     "run_failed",
+    "run_paused",
 ]
 
 

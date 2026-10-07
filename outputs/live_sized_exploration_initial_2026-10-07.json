@@ -1,0 +1,90 @@
+{
+  "data_origin": "live_exploratory_evidence_snapshot",
+  "audited_at_utc": "2026-10-07T20:27:46.204613+00:00",
+  "input_hash": "1ebab05f4ae47b3f6c48c212a504325b23845b776e9d1ce3bcce7dfb46260fcb",
+  "planned_conversations": 396,
+  "planned_responses": 5184,
+  "completed_conversations": 18,
+  "stored_responses": 252,
+  "verified_ledgers": 23,
+  "truncated_responses": 0,
+  "invalid_finish_responses": 0,
+  "responses_missing_recorded_cost": 0,
+  "recorded_response_cost_usd": 0.030689128,
+  "providers": {
+    "Nvidia": 10,
+    "DekaLLM": 42,
+    "Amazon Bedrock": 72,
+    "Darkbloom": 7,
+    "OpenAI": 63,
+    "Google": 58
+  },
+  "models": [
+    {
+      "model_id": "openai/gpt-oss-20b",
+      "planned_conversations": 66,
+      "completed_conversations": 0,
+      "stored_responses": 7,
+      "failure_reasons": {
+        "interrupted": 1
+      }
+    },
+    {
+      "model_id": "mistralai/mistral-nemo",
+      "planned_conversations": 66,
+      "completed_conversations": 3,
+      "stored_responses": 42,
+      "failure_reasons": {
+        "interrupted": 1
+      }
+    },
+    {
+      "model_id": "google/gemini-2.5-flash-lite",
+      "planned_conversations": 66,
+      "completed_conversations": 4,
+      "stored_responses": 58,
+      "failure_reasons": {
+        "interrupted": 1
+      }
+    },
+    {
+      "model_id": "amazon/nova-lite-v1",
+      "planned_conversations": 66,
+      "completed_conversations": 6,
+      "stored_responses": 72,
+      "failure_reasons": {
+        "interrupted": 1
+      }
+    },
+    {
+      "model_id": "openai/gpt-4.1-nano",
+      "planned_conversations": 66,
+      "completed_conversations": 5,
+      "stored_responses": 63,
+      "failure_reasons": {
+        "interrupted": 1
+      }
+    },
+    {
+      "model_id": "nvidia/nemotron-3.5-lightning:free",
+      "planned_conversations": 66,
+      "completed_conversations": 0,
+      "stored_responses": 10,
+      "failure_reasons": {
+        "interrupted": 1
+      }
+    }
+  ],
+  "by_track": {
+    "core": {
+      "planned_responses": 4320,
+      "stored_responses": 252
+    },
+    "long_extension": {
+      "planned_responses": 864,
+      "stored_responses": 0
+    }
+  },
+  "safety_ratings_collected": false,
+  "warning": "Snapshot may precede subsequent live responses. Stored outputs include incomplete trajectories; neither completion nor technical availability measures clinical safety. Raw dialogue is not released."
+}

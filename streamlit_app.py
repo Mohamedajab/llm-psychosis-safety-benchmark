@@ -42,7 +42,30 @@ screen = read_report("live_screening_2026-10-07.json")
 long = read_report("live_longitudinal_2026-10-07.json")
 tabs = st.tabs(["Evidence", "Model panel", "Design explorer", "Conversations", "Publication gates"])
 
+
+@st.fragment(run_every="15s")
+def collection_progress():
+    path = ROOT / "data/raw/live-sized-exploration-2026-10-07/progress.json"
+    st.subheader("Sized exploration · target 5,184 new responses")
+    st.caption("Six models: five inexpensive paid and one free. Ten families, plus a narrow 24-turn track.")
+    if path.exists():
+        progress = json.loads(path.read_text(encoding="utf-8"))
+        metrics = st.columns(3)
+        metrics[0].metric("Stored / target", f"{progress['stored_responses']:,} / 5,184")
+        metrics[1].metric("Completed conversations", f"{progress['completed_conversations']} / 396")
+        metrics[2].metric("Recorded API cost / cap", f"${progress['budget']['recorded_cost_usd']:.3f} / $5")
+        st.progress(min(progress["stored_responses"] / 5184, 1.0))
+        st.caption(f"State: {progress['status']} · Updated UTC: {progress['updated_at_utc']}")
+        st.dataframe(pd.DataFrame(progress["models"]), hide_index=True, width="stretch")
+        st.caption("Stored does not mean complete or safe. No human labels. Refreshes every 15 seconds.")
+        if progress["catalogue_errors"]:
+            st.warning("Catalogue drift prevents some calls: " + "; ".join(progress["catalogue_errors"]))
+    else:
+        st.info("The reduced plan is prepared; live collection has not started on this checkout.")
+
+
 with tabs[0]:
+    collection_progress()
     st.subheader("Live technical pilot")
     st.caption(
         "Actual API records. Stored responses include partial or truncated outputs; they are not ratings."
@@ -188,29 +211,39 @@ with tabs[3]:
             batch = next(path for path in batches if path.name == batch_name)
             records = []
             for path in sorted((batch / "ledgers").glob("*.jsonl")):
-                events = read_verified_events(path)
-                row = events[0].payload["manifest_row"]
+                # Only read the index header here; verify the selected complete
+                # chain below. Hundreds of conversations need not all be loaded.
+                with path.open(encoding="utf-8") as handle:
+                    row = json.loads(handle.readline())["payload"]["manifest_row"]
                 records.append(
                     (
                         f"{row['model_id']} · {row['scenario_family']} · {row['presentation']} · "
-                        f"{row['context_condition']} · r{row['repetition']}",
+                        f"{row['context_condition']} · r{row['repetition']} · h{row['planned_turns']}",
                         path,
-                        events,
+                        row,
                     )
                 )
             label = st.selectbox("Conversation", [record[0] for record in records])
-            _, path, events = next(record for record in records if record[0] == label)
+            _, path, row = next(record for record in records if record[0] == label)
+            events = read_verified_events(path)
             st.caption(f"Verified hash chain · terminal state: {events[-1].event_type}")
             received = [event for event in events if event.event_type == "response_received"]
             if received:
                 turn = st.select_slider("Response turn", options=[event.turn for event in received])
                 response = next(event for event in received if event.turn == turn)
                 snapshot = batch / "study_snapshot.json"
-                recorded_study = (
-                    StudyBundle.model_validate_json(snapshot.read_text(encoding="utf-8"))
-                    if snapshot.exists()
-                    else load_study(ROOT / "config/study-v3")
-                )
+                if (batch / "inputs.json").exists():
+                    inputs = json.loads((batch / "inputs.json").read_text(encoding="utf-8"))
+                    track = next(
+                        item["track"] for item in inputs["rows"] if item["row"]["run_id"] == row["run_id"]
+                    )
+                    recorded_study = StudyBundle.model_validate(inputs["studies"][track])
+                else:
+                    recorded_study = (
+                        StudyBundle.model_validate_json(snapshot.read_text(encoding="utf-8"))
+                        if snapshot.exists()
+                        else load_study(ROOT / "config/study-v3")
+                    )
                 script = find_script(recorded_study, events[0].payload["manifest_row"]["script_id"])
                 with st.chat_message("user"):
                     st.markdown(script.turns[turn - 1])

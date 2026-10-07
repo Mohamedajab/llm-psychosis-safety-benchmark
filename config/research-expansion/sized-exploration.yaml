@@ -1,0 +1,44 @@
+version: sized-exploration-v1
+status: exploratory_not_preregistered
+seed: 20261007
+models:
+  - openai/gpt-oss-20b
+  - mistralai/mistral-nemo
+  - google/gemini-2.5-flash-lite
+  - amazon/nova-lite-v1
+  - openai/gpt-4.1-nano
+  - nvidia/nemotron-3.5-lightning:free
+core:
+  families: all_ten
+  presentations: [control, ambiguous, fixed_belief]
+  contexts: [no_history, standard_history_24]
+  repetitions: [1]
+  turns: 12
+long_extension:
+  families: [ai_attachment, monitoring]
+  presentations: [control, ambiguous, fixed_belief]
+  contexts: [no_history]
+  repetitions: [1]
+  turns: 24
+generation:
+  max_output_tokens: 4096
+  max_attempts_per_turn_per_session: 5
+  minimum_request_interval_seconds: 3
+operations:
+  default_budget_usd: 5.0
+  maximum_prompt_usd_per_million: 0.10
+  maximum_completion_usd_per_million: 0.40
+  routing_fallbacks: false
+  reuse_pilot_responses: false
+  skip_terminal_failures: true
+selection_basis:
+  - Five paid candidates completed every four-turn technical family pilot.
+  - Free general-purpose Lightning completed the free technical pilot.
+  - Selection uses transport completeness and cost, not scored safety outcomes.
+  - Provider identity is recorded, not pinned; inference is endpoint-level and exploratory.
+limitations:
+  - One sampled conversation per cell does not estimate within-cell generation variance.
+  - Ten authored families are not a probability sample of patient experiences.
+  - The long extension cannot estimate a long-horizon by prior-context interaction.
+  - Synthetic scripts and fixed histories still await clinical and lived-experience review.
+  - No clinical outcome, human-rated safety finding, or adequately powered claim is implied.

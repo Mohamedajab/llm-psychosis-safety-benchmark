@@ -1,0 +1,784 @@
+{
+  "data_origin": "planning_simulation_not_live_results",
+  "designs": [
+    {
+      "design": "original_six_family",
+      "assumptions": {
+        "version": "original_six_family_slope0_25",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 6,
+        "scenario_families": 6,
+        "contexts": 2,
+        "repetitions": 2,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.25,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 5184,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "original_six_family_slope0_25",
+        "plan_hash": "19df5e133a7538bbd6f265e25ad9a401f0f76cce712d801ed3f3331876542f55",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 144,
+        "independent_test_blocks": 6,
+        "minimum_two_sided_p": 0.03125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.0033310185185185187,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.04497222222222222,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07087384259259259,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.10859027777777779,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "original_six_family",
+      "assumptions": {
+        "version": "original_six_family_slope0_5",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 6,
+        "scenario_families": 6,
+        "contexts": 2,
+        "repetitions": 2,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.5,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 5184,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "original_six_family_slope0_5",
+        "plan_hash": "fde1461e8a506c198057ae8dc5e33a6e2d196455bd8434d03f625e847c9b76ce",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 144,
+        "independent_test_blocks": 6,
+        "minimum_two_sided_p": 0.03125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.010855324074074075,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.0520787037037037,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07705902777777779,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.11304745370370371,
+            "estimated_detection_probability": 0.0,
+            "monte_carlo_standard_error": 0.0
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "selected_six_model_core",
+      "assumptions": {
+        "version": "selected_six_model_core_slope0_25",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 6,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 1,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.25,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 4320,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "selected_six_model_core_slope0_25",
+        "plan_hash": "076c02e429a596090303ad1738e959b4b3e1e55207f124d2397c5ce5b2db85c7",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 120,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.0026125,
+            "estimated_detection_probability": 0.012,
+            "monte_carlo_standard_error": 0.004869496893930624
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.04447222222222222,
+            "estimated_detection_probability": 0.126,
+            "monte_carlo_standard_error": 0.01484075469779081
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.06951805555555557,
+            "estimated_detection_probability": 0.418,
+            "monte_carlo_standard_error": 0.02205792374635473
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.10995555555555556,
+            "estimated_detection_probability": 0.822,
+            "monte_carlo_standard_error": 0.01710648999648964
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "selected_six_model_core",
+      "assumptions": {
+        "version": "selected_six_model_core_slope0_5",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 6,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 1,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.5,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 4320,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "selected_six_model_core_slope0_5",
+        "plan_hash": "f1297f3ba29f665ce80fc5cbd66bb9611f63cc0c57c7770adf99f17d0c3d41df",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 120,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.008815277777777778,
+            "estimated_detection_probability": 0.008,
+            "monte_carlo_standard_error": 0.003983967871356395
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.050273611111111116,
+            "estimated_detection_probability": 0.062,
+            "monte_carlo_standard_error": 0.010784804124322332
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07413750000000001,
+            "estimated_detection_probability": 0.198,
+            "monte_carlo_standard_error": 0.01782111107647332
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.11439583333333335,
+            "estimated_detection_probability": 0.488,
+            "monte_carlo_standard_error": 0.022354238971613417
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "six_model_two_samples",
+      "assumptions": {
+        "version": "six_model_two_samples_slope0_25",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 6,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 2,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.25,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 8640,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "six_model_two_samples_slope0_25",
+        "plan_hash": "27414530914e33d0ed2fc74f166f355f29f0009853d8181e9f3bab0c45dffc7a",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 240,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.0025805555555555556,
+            "estimated_detection_probability": 0.008,
+            "monte_carlo_standard_error": 0.003983967871356395
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.04538402777777778,
+            "estimated_detection_probability": 0.26,
+            "monte_carlo_standard_error": 0.019616319736382767
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07103958333333334,
+            "estimated_detection_probability": 0.622,
+            "monte_carlo_standard_error": 0.02168483340955148
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.10822847222222222,
+            "estimated_detection_probability": 0.944,
+            "monte_carlo_standard_error": 0.010282412168358165
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "six_model_two_samples",
+      "assumptions": {
+        "version": "six_model_two_samples_slope0_5",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 6,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 2,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.5,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 8640,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "six_model_two_samples_slope0_5",
+        "plan_hash": "393d91c2f2dce7a05f4cc37e5f906ae511ecb3a8f0771f7cd97b8f03c4aeaa84",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 240,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.009714583333333334,
+            "estimated_detection_probability": 0.01,
+            "monte_carlo_standard_error": 0.0044497190922573975
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.05136319444444445,
+            "estimated_detection_probability": 0.114,
+            "monte_carlo_standard_error": 0.014212951839783319
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07680208333333333,
+            "estimated_detection_probability": 0.278,
+            "monte_carlo_standard_error": 0.020035768016225385
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.11152083333333333,
+            "estimated_detection_probability": 0.564,
+            "monte_carlo_standard_error": 0.02217674457624473
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "eight_model_one_sample",
+      "assumptions": {
+        "version": "eight_model_one_sample_slope0_25",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 8,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 1,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.25,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 5760,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "eight_model_one_sample_slope0_25",
+        "plan_hash": "aaa0f090a31b8cae229270231e546abb23ef8c68c688cb4194f3a19dfa4c1ee5",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 160,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.0027625,
+            "estimated_detection_probability": 0.008,
+            "monte_carlo_standard_error": 0.003983967871356395
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.042821874999999995,
+            "estimated_detection_probability": 0.162,
+            "monte_carlo_standard_error": 0.016477621187537962
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07078749999999999,
+            "estimated_detection_probability": 0.524,
+            "monte_carlo_standard_error": 0.02233490541730589
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.10906875,
+            "estimated_detection_probability": 0.896,
+            "monte_carlo_standard_error": 0.013651666564928987
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "eight_model_one_sample",
+      "assumptions": {
+        "version": "eight_model_one_sample_slope0_5",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 8,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 1,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.5,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 5760,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "eight_model_one_sample_slope0_5",
+        "plan_hash": "5201da5fb165130aa0667e904a0935c2fe816465a57fa82d0141cf10458e4579",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 160,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.008833333333333334,
+            "estimated_detection_probability": 0.014,
+            "monte_carlo_standard_error": 0.00525433154644813
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.04835208333333333,
+            "estimated_detection_probability": 0.084,
+            "monte_carlo_standard_error": 0.012405160216619535
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07668020833333335,
+            "estimated_detection_probability": 0.25,
+            "monte_carlo_standard_error": 0.019364916731037084
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.11347083333333333,
+            "estimated_detection_probability": 0.56,
+            "monte_carlo_standard_error": 0.02219909908081857
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "unreduced_eight_model_core",
+      "assumptions": {
+        "version": "unreduced_eight_model_core_slope0_25",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 8,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 3,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.25,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 17280,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "unreduced_eight_model_core_slope0_25",
+        "plan_hash": "76f17825faf61e35e9877afeb0d9947e58f8d6a3b309f9eef3671966e4451644",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 480,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.002143402777777778,
+            "estimated_detection_probability": 0.012,
+            "monte_carlo_standard_error": 0.004869496893930624
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.04274861111111111,
+            "estimated_detection_probability": 0.324,
+            "monte_carlo_standard_error": 0.020929596269398033
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.07025243055555556,
+            "estimated_detection_probability": 0.794,
+            "monte_carlo_standard_error": 0.01808668018183547
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.10896006944444445,
+            "estimated_detection_probability": 0.994,
+            "monte_carlo_standard_error": 0.0034536936748935927
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    },
+    {
+      "design": "unreduced_eight_model_core",
+      "assumptions": {
+        "version": "unreduced_eight_model_core_slope0_5",
+        "status": "planning_not_frozen",
+        "seed": 20261001,
+        "simulations": 500,
+        "alpha_familywise": 0.05,
+        "planned_primary_contrasts": 4,
+        "models": 8,
+        "scenario_families": 10,
+        "contexts": 2,
+        "repetitions": 3,
+        "turns_per_conversation": 12,
+        "baseline_event_probability": 0.2,
+        "contrast_log_odds": [
+          0.0,
+          0.25,
+          0.4,
+          0.6
+        ],
+        "model_random_effect_sd": 0.35,
+        "family_random_effect_sd": 0.45,
+        "conversation_random_effect_sd": 0.5,
+        "family_random_slope_sd": 0.5,
+        "notes": [
+          "Event means a prespecified binary high-risk outcome, not a clinical event in a person.",
+          "Family-block sign flips use the same test implementation as the draft analysis.",
+          "Six family blocks yield a minimum two-sided p of 0.03125, above the first Holm threshold 0.0125.",
+          "Values are planning assumptions and require statistical review before protocol freeze."
+        ]
+      },
+      "core_responses": 17280,
+      "result": {
+        "schema_version": "1.0.0",
+        "plan_version": "unreduced_eight_model_core_slope0_5",
+        "plan_hash": "f33009dcf705a9b60c174be3f5472f8ce1a9c405b32edbc850eee95104b73b09",
+        "seed": 20261001,
+        "simulations": 500,
+        "analysis_unit": "scenario-family block mean of matched conversation differences",
+        "cluster_count_per_presentation": 480,
+        "independent_test_blocks": 10,
+        "minimum_two_sided_p": 0.001953125,
+        "adjusted_alpha": 0.0125,
+        "results": [
+          {
+            "contrast_log_odds": 0.0,
+            "approximate_odds_ratio": 1.0,
+            "mean_probability_difference": 0.008219791666666667,
+            "estimated_detection_probability": 0.012,
+            "monte_carlo_standard_error": 0.004869496893930624
+          },
+          {
+            "contrast_log_odds": 0.25,
+            "approximate_odds_ratio": 1.2840254166877414,
+            "mean_probability_difference": 0.04855173611111111,
+            "estimated_detection_probability": 0.094,
+            "monte_carlo_standard_error": 0.013050976974924139
+          },
+          {
+            "contrast_log_odds": 0.4,
+            "approximate_odds_ratio": 1.4918246976412703,
+            "mean_probability_difference": 0.0756829861111111,
+            "estimated_detection_probability": 0.31,
+            "monte_carlo_standard_error": 0.02068332661831747
+          },
+          {
+            "contrast_log_odds": 0.6,
+            "approximate_odds_ratio": 1.8221188003905089,
+            "mean_probability_difference": 0.11295902777777778,
+            "estimated_detection_probability": 0.66,
+            "monte_carlo_standard_error": 0.021184900282984576
+          }
+        ],
+        "warning": "Planning only; detection is the first Holm hurdle for a binary proxy, not joint ordinal-outcome power. No empirical variance estimates or clinical outcomes are used."
+      }
+    }
+  ],
+  "decision": "six models, ten families, one sample per core cell; narrow long extension",
+  "selected_core_conversations": 360,
+  "selected_core_responses": 4320,
+  "selected_extension_conversations": 36,
+  "selected_extension_responses": 864,
+  "selected_total_responses": 5184,
+  "full_double_rating_hours_at_one_minute_each": 172.8,
+  "unreduced_total_responses": 51840,
+  "warning": "Binary proxy under assumed variance, not empirical or joint ordinal power. The ten-family test-resolution advantage depends on an unverified independent-block assumption. More responses do not substitute for scenario validity or human annotation."
+}

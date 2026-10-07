@@ -25,6 +25,18 @@ endpoints returned responses. Of 66 planned conversations, 39 completed; 167 res
 including partial outputs. These are availability records, not safety scores. See
 [`outputs/live_screening_2026-10-07.json`](outputs/live_screening_2026-10-07.json).
 
+The requested larger collection has been sized down to **5,184 new exploratory responses**:
+six models (five inexpensive paid, one free), ten families in a 12-turn core, and a
+two-family 24-turn extension. This is 90% smaller than the full two-horizon grid.
+The independent-scenario and annotation limits behind this decision are in
+[`docs/SIZED_EXPLORATION_2026_10_07.md`](docs/SIZED_EXPLORATION_2026_10_07.md).
+It is not a claim of adequate confirmatory power. The local viewer shows actual collection
+progress; a planned target is not a completed dataset.
+An early non-mutating audit verified 414 stored responses and 31 completed conversations,
+with no truncation in that snapshot. See
+[`outputs/live_sized_exploration_checked_2026-10-07.json`](outputs/live_sized_exploration_checked_2026-10-07.json).
+Collection can continue beyond the snapshot timestamp; these counts are not final findings.
+
 ## Open the research viewer
 
 ```text
@@ -43,6 +55,22 @@ In VS Code, **Terminal → Run Task → Research: Streamlit viewer** starts the 
 anchors, ten scenario families, two contexts, and three repetitions. The 12-turn core would contain
 1,440 conversations and 17,280 responses. A separate 24-turn exploratory track adds recurrence and
 sustained recovery; it must not be pooled with primary estimates. Neither design is approved.
+This larger proposal is retained for comparison, not currently selected for full collection.
+
+The selected exploratory plan is
+[`config/research-expansion/sized-exploration.yaml`](config/research-expansion/sized-exploration.yaml).
+Preview without making API calls:
+
+```text
+python scripts/run_sized_exploration.py --output-dir data/raw/NEW_BATCH
+```
+
+Live collection additionally requires `--live --api-key-stdin --budget-usd 5` and a key
+provided securely through stdin. A checkpoint can resume with `--resume` and the same
+batch path and budget. Do not put keys in command-line arguments or commit them.
+The runner retains failures, records exact inputs, caps routing prices, and reserves
+conservative costs before calls. Unknown deliveries stay budgeted, not silently retried
+as though they were free. See the sizing amendment for operational limits.
 
 The original six-family configuration is retained for reproducibility. Longer conversations do not
 create independent samples: the six-block draft cannot pass the first of four Holm tests. The

@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import json
+import math
 import time
 import urllib.error
 import urllib.request
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
+from datetime import UTC, datetime
+from email.utils import parsedate_to_datetime
 from typing import Any, Protocol
 
 from psychosis_benchmark.evidence import payload_hash
@@ -60,11 +63,34 @@ class UrllibTransport:
 
 
 class ProviderCallError(RuntimeError):
-    def __init__(self, code: str, status_code: int | None, *, retryable: bool) -> None:
+    def __init__(
+        self,
+        code: str,
+        status_code: int | None,
+        *,
+        retryable: bool,
+        retry_after_seconds: float | None = None,
+    ) -> None:
         super().__init__(code)
         self.code = code
         self.status_code = status_code
         self.retryable = retryable
+        self.retry_after_seconds = retry_after_seconds
+
+
+def retry_after_seconds(headers: Mapping[str, str]) -> float | None:
+    value = next((v for k, v in headers.items() if k.casefold() == "retry-after"), None)
+    if value is None:
+        return None
+    try:
+        seconds = float(value)
+    except ValueError:
+        try:
+            when = parsedate_to_datetime(value)
+            seconds = (when - datetime.now(UTC)).total_seconds()
+        except (TypeError, ValueError):
+            return None
+    return max(0.0, seconds) if math.isfinite(seconds) else None
 
 
 @dataclass(frozen=True)
@@ -166,7 +192,18 @@ class OpenRouterClient:
         latency_ms = (self._clock() - started) * 1000
         if response.status_code >= 400:
             retryable = response.status_code == 429 or response.status_code >= 500
-            raise ProviderCallError(f"http_{response.status_code}", response.status_code, retryable=retryable)
+            if response.status_code == 402:
+                try:
+                    metadata = json.loads(response.body).get("error", {}).get("metadata", {})
+                    retryable = metadata.get("limit_source") == "openrouter_in_flight_budget"
+                except (ValueError, AttributeError, TypeError):
+                    pass
+            raise ProviderCallError(
+                f"http_{response.status_code}",
+                response.status_code,
+                retryable=retryable,
+                retry_after_seconds=retry_after_seconds(response.headers),
+            )
         try:
             decoded = json.loads(response.body)
         except (UnicodeDecodeError, json.JSONDecodeError) as error:
@@ -195,7 +232,12 @@ class OpenRouterClient:
             if isinstance((value := usage_value.get(key)), int) and value >= 0
         }
         cost = usage_value.get("cost")
-        if isinstance(cost, (int, float)) and not isinstance(cost, bool) and cost >= 0:
+        if (
+            isinstance(cost, (int, float))
+            and not isinstance(cost, bool)
+            and math.isfinite(cost)
+            and cost >= 0
+        ):
             usage["cost"] = cost
         return CompletionResult(
             text=text,
