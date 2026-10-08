@@ -1,0 +1,94 @@
+{
+  "archive_bytes": 4785839,
+  "archive_sha256": "d8e301e3f5d4c6723e90eb4ad0ad2ce8940ae3126e7638cc69b46467381ea064",
+  "budget": {
+    "cap_usd": 5.0,
+    "conservative_committed_usd": 0.71758577,
+    "recorded_cost_usd": 0.61345927,
+    "unknown_attempts": 30
+  },
+  "by_track": {
+    "core": {
+      "planned_responses": 4320,
+      "stored_responses": 4084
+    },
+    "long_extension": {
+      "planned_responses": 864,
+      "stored_responses": 811
+    }
+  },
+  "completed_conversations": 359,
+  "content_root_sha256": "3c1e5e19c92323d3f0c2030b5655cf15f73bcfc5f8d5c1374e8f5d4a5e563158",
+  "failure_reasons": {
+    "empty_response": 27,
+    "http_424": 1,
+    "truncated_response": 9
+  },
+  "freeze_tool_sha256": "e99e173a552a54227e0a55abf0cdffee2d3fec75ffbf689af587af46440474f4",
+  "frozen_at_utc": "2026-10-08T20:45:24.805874+00:00",
+  "human_ratings_collected": false,
+  "input_hash": "1ebab05f4ae47b3f6c48c212a504325b23845b776e9d1ce3bcce7dfb46260fcb",
+  "kind": "post_collection_exploratory_evidence_freeze",
+  "models": [
+    {
+      "completed_conversations": 41,
+      "failure_reasons": {
+        "empty_response": 24,
+        "truncated_response": 1
+      },
+      "model_id": "openai/gpt-oss-20b",
+      "planned_conversations": 66,
+      "stored_responses": 677
+    },
+    {
+      "completed_conversations": 66,
+      "failure_reasons": {},
+      "model_id": "mistralai/mistral-nemo",
+      "planned_conversations": 66,
+      "stored_responses": 864
+    },
+    {
+      "completed_conversations": 66,
+      "failure_reasons": {},
+      "model_id": "google/gemini-2.5-flash-lite",
+      "planned_conversations": 66,
+      "stored_responses": 864
+    },
+    {
+      "completed_conversations": 65,
+      "failure_reasons": {
+        "http_424": 1
+      },
+      "model_id": "amazon/nova-lite-v1",
+      "planned_conversations": 66,
+      "stored_responses": 854
+    },
+    {
+      "completed_conversations": 66,
+      "failure_reasons": {},
+      "model_id": "openai/gpt-4.1-nano",
+      "planned_conversations": 66,
+      "stored_responses": 864
+    },
+    {
+      "completed_conversations": 55,
+      "failure_reasons": {
+        "empty_response": 3,
+        "truncated_response": 8
+      },
+      "model_id": "nvidia/nemotron-3.5-lightning:free",
+      "planned_conversations": 66,
+      "stored_responses": 772
+    }
+  ],
+  "not_preregistration": true,
+  "planned_conversations": 396,
+  "planned_responses": 5184,
+  "raw_data_publicly_released": false,
+  "snapshot_files": 407,
+  "source_commit": "b595eb048a2d0d4d5f81aaca5731161abcf2c121",
+  "stored_responses": 4895,
+  "terminal_failed_conversations": 37,
+  "truncated_responses": 9,
+  "verified_ledgers": 396
+}

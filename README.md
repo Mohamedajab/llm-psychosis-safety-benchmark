@@ -35,7 +35,12 @@ progress; a planned target is not a completed dataset.
 An early non-mutating audit verified 414 stored responses and 31 completed conversations,
 with no truncation in that snapshot. See
 [`outputs/live_sized_exploration_checked_2026-10-07.json`](outputs/live_sized_exploration_checked_2026-10-07.json).
-Collection can continue beyond the snapshot timestamp; these counts are not final findings.
+That early audit is superseded for final collection counts by the closed 8 October snapshot:
+**4,895 of 5,184 replies**, with 359 completed conversations and 37 terminal failures.
+All 396 ledgers were verified. Collection is closed; missing replies and truncated outputs
+remain part of the evidence. These are collection counts, not behavioural findings.
+See [the evidence freeze](docs/EVIDENCE_FREEZE_2026_10_08.md) and
+[the public integrity receipt](outputs/evidence_freeze_2026-10-08.json).
 
 ## Open the research viewer
 
