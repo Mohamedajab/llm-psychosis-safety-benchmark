@@ -44,6 +44,12 @@ See [the evidence freeze](docs/EVIDENCE_FREEZE_2026_10_08.md) and
 
 ## Open the research viewer
 
+The separate [Independent Scenario Review portal](https://psychosis-benchmark-independent-review.bigman1232.chatgpt.site)
+is published owner-private for scenario/rubric review. It contains no model replies.
+Participation remains closed until the actual study-opening details are recorded;
+reviewers need both app approval and website sharing access. See
+[the reviewer workflow](docs/INDEPENDENT_REVIEW_PORTAL.md).
+
 ```text
 python -m pip install -e .[dev,dashboard]
 python -m streamlit run streamlit_app.py
